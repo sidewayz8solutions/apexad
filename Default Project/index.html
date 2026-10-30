@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>APEX ASCENSION — The Chain Endures · An Animated Short</title>
+<meta name="description" content="The Chain Endures — an animated short from the ApeX Ascension lore. The Great Disconnection, the discovery of the Chain, and the Treaty of the Two Legions." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="player">
+  <div id="stageWrap">
+    <div id="stage">
+
+      <!-- ================= CANVAS : stars, dust, fire ================= -->
+      <canvas id="fx" width="1920" height="1080"></canvas>
+
+      <!-- ================= SHARED DEFS ================= -->
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+          <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="7" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="bigGlow" x="-120%" y="-120%" width="340%" height="340%">
+            <feGaussianBlur stdDeviation="22" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+          <filter id="blur22"><feGaussianBlur stdDeviation="22"/></filter>
+          <filter id="blur40"><feGaussianBlur stdDeviation="40"/></filter>
+          <linearGradient id="chainStroke" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#38f0ff"/><stop offset=".5" stop-color="#9bd8ff"/><stop offset="1" stop-color="#b57bff"/>
+          </linearGradient>
+          <linearGradient id="solGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#14f195"/><stop offset="1" stop-color="#b57bff"/>
+          </linearGradient>
+          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#070b1a"/><stop offset=".55" stop-color="#0a1024"/><stop offset="1" stop-color="#05070f"/>
+          </linearGradient>
+          <linearGradient id="obeliskGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#1a0a14"/><stop offset=".45" stop-color="#120713"/><stop offset="1" stop-color="#05040a"/>
+          </linearGradient>
+          <radialGradient id="eyeGrad" cx="45%" cy="45%" r="60%">
+            <stop offset="0" stop-color="#ff8a9a"/><stop offset=".45" stop-color="#ff2745"/><stop offset="1" stop-color="#6d0313"/>
+          </radialGradient>
+          <linearGradient id="beamGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#8ff8ff" stop-opacity=".22"/>
+            <stop offset="1" stop-color="#8ff8ff" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="beamGrad2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#b57bff" stop-opacity=".18"/>
+            <stop offset="1" stop-color="#b57bff" stop-opacity="0"/>
+          </linearGradient>
+          <radialGradient id="moonGrad" cx="42%" cy="38%" r="62%">
+            <stop offset="0" stop-color="#e6ecff"/><stop offset=".55" stop-color="#a8b8e4"/><stop offset="1" stop-color="#4d5b8f"/>
+          </radialGradient>
+          <radialGradient id="moonHaze" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stop-color="#8fa3d8" stop-opacity=".32"/>
+            <stop offset="1" stop-color="#8fa3d8" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="moonShade" x1="0" y1="0" x2="1" y2="1">
+            <stop offset=".35" stop-color="#05070f" stop-opacity="0"/>
+            <stop offset="1" stop-color="#04060f" stop-opacity=".62"/>
+          </linearGradient>
+          <radialGradient id="silenceVoid" cx="50%" cy="48%" r="50%">
+            <stop offset="0" stop-color="#04060c" stop-opacity=".88"/>
+            <stop offset=".55" stop-color="#04060c" stop-opacity=".5"/>
+            <stop offset="1" stop-color="#04060c" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="apeFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#121c30"/>
+            <stop offset=".42" stop-color="#080e1b"/>
+            <stop offset="1" stop-color="#03060d"/>
+          </linearGradient>
+
+          <!-- ============ K'LAR : THE FIRST APEX ============ -->
+          <symbol id="klarBust" viewBox="0 0 1000 1000">
+            <!-- backlight -->
+            <ellipse cx="500" cy="470" rx="430" ry="450" fill="url(#halo)" opacity=".5"/>
+            <!-- ============ shoulders / armor ============ -->
+            <g id="klarArmor">
+              <!-- chest -->
+              <path d="M330 812 C392 770 608 770 670 812 L790 1080 L210 1080 Z" fill="#0a0e1a"/>
+              <path d="M330 812 C392 770 608 770 670 812 L700 900 L300 900 Z" fill="#0d1222"/>
+              <!-- left pauldron -->
+              <path d="M300 900 L250 812 C210 780 130 772 78 800 L0 860 L0 1080 L250 1080 Z" fill="#0b1020"/>
+              <path d="M250 812 C210 780 130 772 78 800 L10 852 L30 880 C110 842 200 846 262 878 Z" fill="#111830"/>
+              <path d="M40 866 L120 840 L170 856 L104 890 Z" fill="#1a2547" opacity=".7"/>
+              <!-- right pauldron -->
+              <path d="M700 900 L750 812 C790 780 870 772 922 800 L1000 860 L1000 1080 L750 1080 Z" fill="#0b1020"/>
+              <path d="M750 812 C790 780 870 772 922 800 L990 852 L970 880 C890 842 800 846 738 878 Z" fill="#111830"/>
+              <path d="M960 866 L880 840 L830 856 L896 890 Z" fill="#1a2547" opacity=".7"/>
+              <!-- chest plate -->
+              <path d="M400 850 L600 850 L640 1080 L360 1080 Z" fill="#0c1120" stroke="rgba(56,240,255,.22)" stroke-width="2"/>
+              <path d="M410 860 L520 860 L512 900 L404 906 Z" fill="#151d38" opacity=".9"/>
+              <path d="M590 860 L480 860 L488 900 L596 906 Z" fill="#151d38" opacity=".9"/>
+              <!-- orange vents -->
+              <path d="M346 880 L392 866 L400 916 L352 932 Z" fill="#ff7a1a" opacity=".9" filter="url(#softGlow)"/>
+              <path d="M654 880 L608 866 L600 916 L648 932 Z" fill="#ff7a1a" opacity=".9" filter="url(#softGlow)"/>
+              <path d="M356 886 L382 877 L386 902 L360 911 Z" fill="#ffd27a"/>
+              <path d="M644 886 L618 877 L614 902 L640 911 Z" fill="#ffd27a"/>
+              <!-- cyan seams -->
+              <path d="M420 780 L470 850 L452 1080" stroke="#38f0ff" stroke-width="2.5" opacity=".35" fill="none"/>
+              <path d="M580 780 L530 850 L548 1080" stroke="#38f0ff" stroke-width="2.5" opacity=".35" fill="none"/>
+              <!-- armor plate detail -->
+              <g fill="none" stroke="rgba(120,170,255,.22)" stroke-width="2">
+                <path d="M262 878 L206 900 L180 1000"/>
+                <path d="M738 878 L794 900 L820 1000"/>
+                <path d="M300 940 L350 962 L340 1060"/>
+                <path d="M700 940 L650 962 L660 1060"/>
+                <path d="M392 930 L440 950 L436 1040"/>
+                <path d="M608 930 L560 950 L564 1040"/>
+              </g>
+              <g fill="rgba(56,240,255,.55)" filter="url(#softGlow)">
+                <rect x="300" y="902" width="26" height="4" rx="2"/>
+                <rect x="674" y="902" width="26" height="4" rx="2"/>
+                <rect x="398" y="992" width="18" height="3" rx="1.5" opacity=".6"/>
+                <rect x="584" y="992" width="18" height="3" rx="1.5" opacity=".6"/>
+              </g>
+              <!-- pauldron emblem -->
+              <g transform="translate(150 930)" opacity=".55">
+                <circle r="30" fill="none" stroke="rgba(56,240,255,.4)" stroke-width="2"/>
+                <circle r="20" fill="none" stroke="rgba(56,240,255,.3)" stroke-width="1.5" stroke-dasharray="4 5"/>
+              </g>
+              <g transform="translate(850 930)" opacity=".55">
+                <circle r="30" fill="none" stroke="rgba(181,123,255,.4)" stroke-width="2"/>
+                <circle r="20" fill="none" stroke="rgba(181,123,255,.3)" stroke-width="1.5" stroke-dasharray="4 5"/>
+              </g>
+              <!-- chest emblem : three bars -->
+              <g transform="translate(500 950)" filter="url(#softGlow)">
+                <path d="M-58 -30 L40 -30 L20 -6 L-70 -6 Z" fill="url(#solGrad)"/>
+                <path d="M-40 6 L58 6 L38 30 L-52 30 Z" fill="url(#solGrad)" opacity=".9"/>
+                <path d="M-52 42 L46 42 L26 66 L-64 66 Z" fill="url(#solGrad)" opacity=".75"/>
+              </g>
+              <!-- belt -->
+              <path d="M300 1002 L700 1002 L706 1034 L294 1034 Z" fill="#070a14"/>
+              <rect x="474" y="1000" width="52" height="36" fill="#111a33" stroke="rgba(56,240,255,.4)" stroke-width="2"/>
+            </g>
+
+            <!-- ============ neck fur ============ -->
+            <path d="M392 690 C400 760 380 790 356 812 C410 800 440 792 460 796 C476 812 490 820 500 820 C510 820 524 812 540 796 C560 792 590 800 644 812 C620 790 600 760 608 690 Z"
+                  fill="#080c18"/>
+
+            <!-- ============ head silhouette ============ -->
+            <path id="klarHead" d="M500 150
+              C612 150 692 214 716 306 C726 344 726 380 720 410
+              C742 436 748 466 738 492 C752 502 752 520 740 532
+              C748 566 748 596 736 620 C726 666 700 700 664 716
+              C640 727 618 733 600 735 C560 745 440 745 400 735
+              C382 733 360 727 336 716 C300 700 274 666 264 620
+              C252 596 252 566 260 532 C248 520 248 502 262 492
+              C252 466 258 436 280 410 C274 380 274 344 284 306
+              C308 214 388 150 500 150 Z"
+              fill="#0a0f1e"/>
+
+            <!-- fur tufts (jagged silhouette) -->
+            <g fill="#0a0f1e">
+              <path d="M336 716 L318 750 L344 740 L334 778 L362 754 L366 792 L392 762 L398 798 L420 760 L430 786 L452 752 L466 776 L478 744 L500 764 L522 744 L534 776 L548 752 L570 786 L580 760 L602 798 L608 762 L634 792 L638 754 L666 778 L656 740 L682 750 L664 716 Z"/>
+              <path d="M468 148 L470 112 L490 134 L500 92 L514 132 L536 106 L540 142 L566 122 L562 158 Z"/>
+              <path d="M286 320 L254 300 L274 336 L238 330 L262 362 L232 370 L268 384 L246 406 L282 400 Z"/>
+              <path d="M714 320 L746 300 L726 336 L762 330 L738 362 L768 370 L732 384 L754 406 L718 400 Z"/>
+              <path d="M404 202 L382 176 L408 184 L398 154 L424 174 L428 146 L450 174 Z"/>
+              <path d="M596 202 L618 176 L592 184 L602 154 L576 174 L572 146 L550 174 Z"/>
+              <path d="M354 248 L326 226 L350 234 L340 204 L366 226 Z" opacity=".9"/>
+              <path d="M646 248 L674 226 L650 234 L660 204 L634 226 Z" opacity=".9"/>
+            </g>
+
+            <!-- ears -->
+            <g>
+              <ellipse cx="268" cy="470" rx="42" ry="62" fill="#0a0f1e"/>
+              <ellipse cx="262" cy="468" rx="22" ry="40" fill="#232a45" opacity=".8"/>
+              <path d="M250 438 C266 452 270 484 258 504" stroke="#4a5379" stroke-width="3" fill="none" opacity=".5"/>
+              <ellipse cx="732" cy="470" rx="42" ry="62" fill="#0a0f1e"/>
+              <ellipse cx="738" cy="468" rx="22" ry="40" fill="#232a45" opacity=".8"/>
+              <path d="M750 438 C734 452 730 484 742 504" stroke="#7b5cff" stroke-width="3" fill="none" opacity=".45"/>
+            </g>
+
+            <!-- ============ face ============ -->
+            <g id="klarFace">
+              <!-- brow shadow -->
+              <path d="M320 372 C380 336 620 336 680 372 C640 402 360 402 320 372 Z" fill="#05070f" opacity=".8"/>
+              <!-- muzzle -->
+              <path d="M500 438 C516 438 530 456 536 486 C544 504 574 526 580 562
+                       C586 608 548 642 500 642 C452 642 414 608 420 562
+                       C426 526 456 504 464 486 C470 456 484 438 500 438 Z" fill="url(#skinGrad)"/>
+              <!-- muzzle shading -->
+              <path d="M500 438 C516 438 530 456 536 486 C542 500 562 512 574 524 C538 520 462 520 426 524
+                       C438 512 458 500 464 486 C470 456 484 438 500 438 Z" fill="#000" opacity=".28"/>
+              <path d="M422 570 C442 608 470 626 500 626 C530 626 558 608 578 570 C570 618 540 642 500 642 C460 642 430 618 422 570 Z" fill="#2c1a12" opacity=".45"/>
+              <path d="M500 460 L500 620" stroke="#e2b394" stroke-width="26" opacity=".12" filter="url(#blur8)"/>
+              <!-- brow shelf -->
+              <path d="M356 442 C400 462 600 462 644 442 L644 470 C596 490 404 490 356 470 Z" fill="#05070f" opacity=".5"/>
+              <!-- cheek fur frames the muzzle -->
+              <path d="M436 470 C408 500 396 552 404 598 C410 632 428 656 452 670 L444 690 C424 680 408 664 396 642
+                       C378 606 376 546 394 502 C404 480 418 466 436 470 Z" fill="#0a0f1e"/>
+              <path d="M564 470 C592 500 604 552 596 598 C590 632 572 656 548 670 L556 690 C576 680 592 664 604 642
+                       C622 606 624 546 606 502 C596 480 582 466 564 470 Z" fill="#0a0f1e"/>
+              <!-- jowls -->
+              <path d="M414 600 C398 626 392 654 400 678 C406 700 420 716 440 726 L420 736 C392 720 376 694 374 662 C372 632 382 606 398 590 Z" fill="#080d1a"/>
+              <path d="M586 600 C602 626 608 654 600 678 C594 700 580 716 560 726 L580 736 C608 720 624 694 626 662 C628 632 618 606 602 590 Z" fill="#080d1a"/>
+              <!-- beard -->
+              <path d="M428 646 C444 676 556 676 572 646 L586 696 C564 726 436 726 414 696 Z" fill="#080d1a"/>
+              <path d="M448 664 L438 704 M470 672 L464 712 M500 676 L500 718 M530 672 L536 712 M552 664 L562 704"
+                    stroke="#151f3a" stroke-width="3" opacity=".8"/>
+              <!-- nose bridge -->
+              <path d="M482 442 L482 500 C482 512 490 516 500 516 C510 516 518 512 518 500 L518 442 Z" fill="#c08e70" opacity=".6"/>
+              <path d="M500 446 L506 504" stroke="#8a5c46" stroke-width="3.5" opacity=".5"/>
+              <!-- nose -->
+              <path d="M470 506 C482 494 518 494 530 506 C536 520 526 534 500 538 C474 534 464 520 470 506 Z" fill="#8a5642"/>
+              <ellipse cx="483" cy="516" rx="10" ry="7.5" fill="#2b1712" opacity=".9"/>
+              <ellipse cx="517" cy="516" rx="10" ry="7.5" fill="#2b1712" opacity=".9"/>
+              <path d="M472 532 C488 543 512 543 528 532" stroke="#5e3527" stroke-width="4" fill="none"/>
+              <!-- mouth / smirk -->
+              <path d="M452 580 C478 572 508 572 528 578 C542 582 552 578 560 568" stroke="#3c2118" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+              <path d="M456 590 C484 606 524 604 548 586" stroke="#2a1710" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M446 574 C456 566 470 566 478 572" stroke="#2a1710" stroke-width="3" fill="none" opacity=".7"/>
+              <!-- upper-lip fur / moustache -->
+              <path d="M428 566 C454 554 482 556 498 570 C470 574 448 576 430 572 Z" fill="#080d1a" opacity=".8"/>
+              <path d="M572 566 C546 554 518 556 502 570 C530 574 552 576 570 572 Z" fill="#080d1a" opacity=".8"/>
+              <!-- chin fur -->
+              <path d="M432 630 C458 648 542 648 568 630 L562 660 C536 674 464 674 438 660 Z" fill="#080d1a" opacity=".7"/>
+              <path d="M500 592 L500 608" stroke="#5b3426" stroke-width="4" opacity=".55"/>
+              <path d="M418 556 C424 574 430 586 438 596 M582 556 C576 574 570 586 562 596"
+                    stroke="#7d4c38" stroke-width="3" fill="none" opacity=".45"/>
+              <!-- chin -->
+              <path d="M466 636 C482 644 518 644 534 636" stroke="#7d4c38" stroke-width="3" fill="none" opacity=".45"/>
+              <!-- fur texture -->
+              <g stroke="#1a2444" stroke-width="2" opacity=".6" fill="none">
+                <path d="M340 560 C356 600 372 636 396 660"/>
+                <path d="M660 560 C644 600 628 636 604 660"/>
+                <path d="M310 520 C322 556 332 584 350 610"/>
+                <path d="M690 520 C678 556 668 584 650 610"/>
+                <path d="M330 430 C340 470 344 500 340 530"/>
+                <path d="M670 430 C660 470 656 500 660 530"/>
+                <path d="M356 360 C368 372 376 388 378 402"/>
+                <path d="M644 360 C632 372 624 388 622 402"/>
+              </g>
+              <g stroke="#26304f" stroke-width="1.6" opacity=".45" fill="none">
+                <path d="M368 300 C380 288 394 282 408 280"/>
+                <path d="M632 300 C620 288 606 282 592 280"/>
+                <path d="M390 240 C404 230 420 224 436 222"/>
+                <path d="M610 240 C596 230 580 224 564 222"/>
+                <path d="M300 540 C304 566 306 590 304 612"/>
+                <path d="M700 540 C696 566 694 590 696 612"/>
+              </g>
+              <!-- scar -->
+              <path d="M638 414 L614 462" stroke="#3d2a3a" stroke-width="3" opacity=".55" stroke-linecap="round"/>
+              <!-- headband shadow on brow -->
+              <path d="M286 356 C380 326 620 326 714 356 L714 378 C620 348 380 348 286 378 Z" fill="#000" opacity=".35"/>
+            </g>
+
+            <!-- ============ headband ============ -->
+            <g id="klarBand">
+              <path d="M286 300 C380 266 620 266 714 300 L722 362 C620 330 380 330 278 362 Z" fill="url(#bandGrad)"/>
+              <path d="M286 300 C380 266 620 266 714 300 L716 318 C618 288 382 288 284 318 Z" fill="#4a63f0" opacity=".6"/>
+              <path d="M284 340 C382 310 618 310 718 340" stroke="#0f1c74" stroke-width="2" fill="none" opacity=".6"/>
+              <text x="500" y="324" text-anchor="middle" font-family="Orbitron, sans-serif" font-size="26"
+                    font-weight="700" letter-spacing="6" fill="#eaf0ff" opacity=".95">SOLANA</text>
+              <!-- knot + tails -->
+              <path d="M286 320 C258 306 236 300 216 306 C232 322 240 342 234 360 C258 352 276 344 292 338 Z" fill="#2a44c9"/>
+              <path d="M276 342 C236 340 196 350 168 372 C200 384 226 410 238 444 C254 408 276 380 300 362 Z" fill="#2338ae"/>
+              <path d="M282 356 C258 392 246 436 250 476 C272 450 300 428 328 416 C308 396 296 378 292 358 Z" fill="#1b2b93"/>
+              <path d="M266 344 C236 348 208 360 190 376" stroke="#6c8bff" stroke-width="3" fill="none" opacity=".6"/>
+            </g>
+
+            <!-- ============ goggles ============ -->
+            <g id="klarGoggles">
+              <!-- strap -->
+              <path d="M292 396 C270 392 250 398 240 412 M708 396 C730 392 750 398 760 412"
+                    stroke="#080c18" stroke-width="16" stroke-linecap="round"/>
+              <!-- lens bloom -->
+              <g filter="url(#bigGlow)" opacity=".9">
+                <ellipse cx="402" cy="392" rx="82" ry="44" fill="#ff2f4d" opacity=".55"/>
+                <ellipse cx="598" cy="392" rx="82" ry="44" fill="#ff2f4d" opacity=".55"/>
+              </g>
+              <!-- frame -->
+              <path d="M306 348 C380 328 620 328 694 348 C712 354 712 434 694 448
+                       C640 464 360 464 306 448 C288 434 288 354 306 348 Z" fill="#0d1120" stroke="#1d2742" stroke-width="3"/>
+              <!-- lenses -->
+              <path d="M326 360 C376 350 442 352 470 362 C480 390 480 414 470 432 C430 442 358 440 330 430 C320 408 320 382 326 360 Z" fill="url(#lensGrad)"/>
+              <path d="M530 362 C558 352 624 350 674 360 C680 382 680 408 670 430 C642 440 570 442 530 432 C520 414 520 390 530 362 Z" fill="url(#lensGrad)"/>
+              <!-- lens inner structure -->
+              <g opacity=".55" fill="none" stroke="#ffb3bd" stroke-width="2">
+                <path d="M344 398 C370 380 408 374 436 384"/>
+                <path d="M564 384 C592 374 630 380 656 398"/>
+              </g>
+              <g opacity=".5" fill="#fff">
+                <path d="M348 380 C364 368 388 364 402 368 L396 376 C382 374 362 380 352 390 Z" opacity=".55"/>
+                <path d="M552 380 C568 368 592 364 606 368 L600 376 C586 374 566 380 556 390 Z" opacity=".45"/>
+              </g>
+              <!-- pupils (behind glass) -->
+              <g opacity=".9">
+                <ellipse cx="398" cy="398" rx="11" ry="19" fill="#3a0710"/>
+                <ellipse cx="602" cy="398" rx="11" ry="19" fill="#3a0710"/>
+                <ellipse cx="398" cy="398" rx="4" ry="11" fill="#0a0206"/>
+                <ellipse cx="602" cy="398" rx="4" ry="11" fill="#0a0206"/>
+                <ellipse cx="394" cy="390" rx="2" ry="3" fill="#ffb3bd" opacity=".7"/>
+                <ellipse cx="598" cy="390" rx="2" ry="3" fill="#ffb3bd" opacity=".7"/>
+              </g>
+              <!-- angry brow shadows across the lenses -->
+              <path d="M330 362 C368 352 424 352 466 362 L466 382 C420 372 368 372 332 384 Z" fill="#3d0210" opacity=".85"/>
+              <path d="M670 362 C632 352 576 352 534 362 L534 382 C580 372 632 372 668 384 Z" fill="#3d0210" opacity=".85"/>
+              <!-- bridge -->
+              <path d="M470 372 C486 362 514 362 530 372 L530 404 C514 396 486 396 470 404 Z" fill="#121a30"/>
+              <path d="M478 380 C490 374 510 374 522 380" stroke="#38f0ff" stroke-width="2" fill="none" opacity=".45"/>
+              <!-- rim -->
+              <path d="M308 352 C380 332 620 332 692 352" stroke="#7fd8ff" stroke-width="3" fill="none" opacity=".5" filter="url(#softGlow)"/>
+              <!-- bolts -->
+              <g fill="#2a3555">
+                <circle cx="318" cy="368" r="5"/><circle cx="682" cy="368" r="5"/>
+                <circle cx="318" cy="430" r="5"/><circle cx="682" cy="430" r="5"/>
+              </g>
+            </g>
+
+            <!-- ============ rim lights ============ -->
+            <g fill="none" stroke-linecap="round">
+              <path d="M330 250 C300 306 286 360 282 410 C278 440 272 456 268 470"
+                    stroke="#38f0ff" stroke-width="5" opacity=".55" filter="url(#softGlow)"/>
+              <path d="M300 500 C290 540 292 578 304 612"
+                    stroke="#38f0ff" stroke-width="4" opacity=".4" filter="url(#softGlow)"/>
+              <path d="M670 250 C700 306 714 360 718 410 C722 440 728 456 732 470"
+                    stroke="#b57bff" stroke-width="5" opacity=".6" filter="url(#softGlow)"/>
+              <path d="M700 500 C710 540 708 578 696 612"
+                    stroke="#ff5a72" stroke-width="4" opacity=".35" filter="url(#softGlow)"/>
+              <path d="M700 820 C790 786 870 780 922 806"
+                    stroke="#38f0ff" stroke-width="3" opacity=".5" filter="url(#softGlow)"/>
+              <path d="M300 820 C210 786 130 780 78 806"
+                    stroke="#b57bff" stroke-width="3" opacity=".45" filter="url(#softGlow)"/>
+            </g>
+
+            <!-- goggle under-glow on muzzle -->
+            <ellipse cx="500" cy="470" rx="120" ry="40" fill="#ff2f4d" opacity=".12" filter="url(#blur22)"/>
+          </symbol>
+
+          <radialGradient id="halo" cx="50%" cy="45%" r="55%">
+            <stop offset="0" stop-color="#3a5cff" stop-opacity=".5"/>
+            <stop offset="1" stop-color="#3a5cff" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="skinGrad" x1=".2" y1="0" x2=".8" y2="1">
+            <stop offset="0" stop-color="#c99a7d"/><stop offset=".5" stop-color="#a9755b"/><stop offset="1" stop-color="#6f4636"/>
+          </linearGradient>
+          <linearGradient id="bandGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3350e8"/><stop offset="1" stop-color="#1a2a9b"/>
+          </linearGradient>
+          <radialGradient id="lensGrad" cx="42%" cy="38%" r="70%">
+            <stop offset="0" stop-color="#ff7b88"/><stop offset=".45" stop-color="#e01c3a"/><stop offset="1" stop-color="#6b0517"/>
+          </radialGradient>
+
+          <!-- ape silhouette (small, wide shots) -->
+          <symbol id="apeSil" viewBox="0 0 200 300">
+            <!-- short thick legs -->
+            <path d="M56 246 L54 284 C54 293 60 298 69 298 L86 298 C91 291 92 270 90 246 Z"/>
+            <path d="M144 246 L146 284 C146 293 140 298 131 298 L114 298 C109 291 108 270 110 246 Z"/>
+            <!-- long arms, knuckles near the ground -->
+            <path d="M34 112 C22 134 16 166 15 196 C14 220 18 240 24 254 C27 262 41 262 44 254 C39 240 37 220 39 198 C41 174 46 148 56 128 Z"/>
+            <path d="M166 112 C178 134 184 166 185 196 C186 220 182 240 176 254 C173 262 159 262 156 254 C161 240 163 220 161 198 C159 174 154 148 144 128 Z"/>
+            <circle cx="30" cy="258" r="15"/><circle cx="170" cy="258" r="15"/>
+            <!-- torso: broad shoulders tapering to the waist -->
+            <path d="M70 100 C44 106 28 124 25 148 C23 168 30 190 40 206 L52 250 L148 250 L160 206 C170 190 177 168 175 148 C172 124 156 106 130 100 Z"/>
+            <!-- head -->
+            <ellipse cx="100" cy="58" rx="33" ry="31"/>
+            <path d="M69 48 C71 24 84 9 100 9 C116 9 129 24 131 48 C120 34 80 34 69 48 Z"/>
+            <ellipse cx="100" cy="78" rx="20" ry="14" fill="#0d1526"/>
+            <circle cx="65" cy="62" r="8"/><circle cx="135" cy="62" r="8"/>
+            <path d="M82 84 L78 104 L122 104 L118 84 Z"/>
+            <!-- brow shadow -->
+            <path d="M73 46 C84 37 116 37 127 46 L125 54 C114 46 86 46 75 54 Z" fill="#000" opacity=".32"/>
+          </symbol>
+          <!-- pepe silhouette (small) -->
+          <symbol id="pepeSil" viewBox="0 0 200 300">
+            <!-- body -->
+            <path d="M62 86 C44 96 32 118 32 152 L38 300 L162 300 L168 152 C168 118 156 96 138 86 Z"/>
+            <!-- wide head -->
+            <path d="M100 14 C144 14 178 32 178 58 C178 82 152 96 100 96 C48 96 22 82 22 58 C22 32 56 14 100 14 Z"/>
+            <!-- eye bumps -->
+            <circle cx="70" cy="34" r="26"/><circle cx="130" cy="34" r="26"/>
+            <circle cx="70" cy="34" r="12" fill="#8bffcf" opacity=".7"/>
+            <circle cx="130" cy="34" r="12" fill="#8bffcf" opacity=".7"/>
+            <circle cx="70" cy="34" r="5" fill="#020a08"/>
+            <circle cx="130" cy="34" r="5" fill="#020a08"/>
+            <!-- mouth -->
+            <path d="M44 66 C68 82 132 82 156 66" stroke="#000" stroke-width="5" fill="none" opacity=".35"/>
+            <!-- arms -->
+            <path d="M34 130 C24 152 20 188 24 218 L34 228 L44 220 C40 196 42 164 50 146 Z"/>
+            <path d="M166 130 C176 152 180 188 176 218 L166 228 L156 220 C160 196 158 164 150 146 Z"/>
+            <circle cx="36" cy="224" r="13"/><circle cx="164" cy="224" r="13"/>
+          </symbol>
+        </defs>
+      </svg>
+
+      <!-- ============================================================
+           SCENE 01 — THE REACH
+           ============================================================ -->
+      <div class="scene" id="s-reach">
+        <div class="cam">
+          <svg viewBox="0 0 1920 1080">
+            <g id="reachHalo" opacity=".9">
+              <path d="M960 60 L960 900" stroke="#ff2f4d" stroke-width="160" opacity=".055" filter="url(#blur40)"/>
+              <polygon points="1480,486 1220,936 700,936 440,486 700,36 1220,36" fill="none" stroke="rgba(255,47,77,.10)" stroke-width="1.5"/>
+              <polygon points="1360,486 1150,850 770,850 560,486 770,122 1150,122" fill="none" stroke="rgba(255,47,77,.08)" stroke-width="1" stroke-dasharray="3 10"/>
+              <ellipse cx="960" cy="900" rx="440" ry="64" fill="#ff2f4d" opacity=".08" filter="url(#blur40)"/>
+            </g>
+            <g id="reachNet"></g>
+            <g id="reachCore" transform="translate(960 486)">
+              <g id="reachRings" fill="none" stroke="#ff2f4d">
+                <circle r="118" stroke-opacity=".5" stroke-width="1.5"/>
+                <circle r="176" stroke-opacity=".3" stroke-dasharray="2 14"/>
+                <circle r="228" stroke-opacity=".18"/>
+                <circle r="318" stroke-opacity=".14" stroke-dasharray="1 20"/>
+              </g>
+              <g id="reachObelisk">
+                <path d="M0 -300 L104 -214 L104 226 L0 300 L-104 226 L-104 -214 Z" fill="url(#obeliskGrad)" stroke="rgba(255,47,77,.5)" stroke-width="2.5"/>
+                <path d="M0 -300 L-104 -214 L-104 226 L0 300 Z" fill="#2a0a16" opacity=".5"/>
+                <path d="M0 -300 L104 -214 L104 226 L0 300 Z" fill="#020207" opacity=".75"/>
+                <path d="M0 -298 L0 298" stroke="rgba(255,120,140,.4)" stroke-width="1.5"/>
+                <path d="M-104 -214 L0 -150 L104 -214" fill="none" stroke="rgba(255,120,140,.3)" stroke-width="1.5"/>
+                <path d="M0 -300 L0 300" stroke="rgba(255,47,77,.35)" stroke-width="2"/>
+                <path d="M-104 -214 L0 -150 L104 -214" fill="none" stroke="rgba(255,95,120,.35)" stroke-width="2"/>
+                <path d="M-104 226 L0 160 L104 226" fill="none" stroke="rgba(255,95,120,.3)" stroke-width="2"/>
+                <g id="reachEye">
+                  <path d="M0 -108 C42 -108 72 -66 72 -20 C72 30 42 66 0 66 C-42 66 -72 30 -72 -20 C-72 -66 -42 -108 0 -108 Z" fill="#2a0309" stroke="rgba(255,60,90,.7)" stroke-width="3"/>
+                  <path d="M-6 -78 C26 -78 44 -52 44 -18 C44 18 26 44 -6 44 C-38 44 -50 16 -50 -18 C-50 -52 -38 -78 -6 -78 Z" fill="url(#eyeGrad)"/>
+                  <ellipse cx="-4" cy="-16" rx="13" ry="30" fill="#120106"/>
+                  <ellipse cx="-8" cy="-30" rx="5" ry="10" fill="#fff" opacity=".35"/>
+                </g>
+              </g>
+              <g id="reachPulse" opacity="0"></g>
+              <ellipse cx="0" cy="330" rx="240" ry="44" fill="#ff2f4d" opacity=".16" filter="url(#blur22)"/>
+            </g>
+            <g id="reachDebris"></g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SCENE 02 — THE GREAT DISCONNECTION
+           ============================================================ -->
+      <div class="scene" id="s-break">
+        <div class="cam">
+          <svg viewBox="0 0 1920 1080">
+            <circle id="breakShock" cx="960" cy="480" r="0" fill="none" stroke="#ff5a72" stroke-width="2" opacity="0"/>
+            <circle id="breakShock2" cx="960" cy="480" r="0" fill="none" stroke="rgba(120,155,225,.6)" stroke-width="1" opacity="0"/>
+            <g id="breakShards"></g>
+            <g id="breakNodes" opacity=".8"></g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SCENE 03 — SILENCE
+           ============================================================ -->
+      <div class="scene" id="s-silence">
+        <div class="cam">
+          <svg viewBox="0 0 1920 1080">
+            <ellipse cx="380" cy="300" rx="360" ry="330" fill="url(#silenceVoid)"/>
+            <ellipse cx="380" cy="300" rx="330" ry="300" fill="none" stroke="rgba(120,155,225,.08)" stroke-width="1.5"/>
+            <g opacity=".4" stroke="#5c668a" fill="none">
+              <g transform="translate(1430 760) rotate(24)">
+                <rect x="-34" y="-16" width="68" height="32" rx="16" stroke-width="2.5"/>
+                <rect x="-24" y="-9" width="48" height="18" rx="9" stroke-width="1" opacity=".5"/>
+              </g>
+              <g transform="translate(1180 840) rotate(-64)">
+                <rect x="-26" y="-12" width="52" height="24" rx="12" stroke-width="2"/>
+              </g>
+              <g transform="translate(520 760) rotate(72) scale(.8)">
+                <rect x="-30" y="-14" width="60" height="28" rx="14" stroke-width="2"/>
+              </g>
+            </g>
+            <g opacity=".5" transform="translate(1180 470)">
+              <circle r="330" fill="none" stroke="rgba(120,155,225,.09)" stroke-width="1" stroke-dasharray="5 18"/>
+              <circle r="252" fill="none" stroke="rgba(255,47,77,.08)" stroke-width="1.5"/>
+              <g stroke="rgba(120,155,225,.12)" stroke-width="1" fill="none">
+                <path d="M-252 0 L-120 -140 L60 -190 L210 -90 L252 0"/>
+                <path d="M-120 -140 L-60 80 L120 150 L210 -90"/>
+              </g>
+              <g fill="rgba(150,175,225,.35)">
+                <circle cx="-252" cy="0" r="3"/><circle cx="-120" cy="-140" r="2.5"/>
+                <circle cx="60" cy="-190" r="2"/><circle cx="210" cy="-90" r="3"/>
+                <circle cx="-60" cy="80" r="2"/><circle cx="120" cy="150" r="2.5"/>
+              </g>
+            </g>
+            <g id="silenceNodes"></g>
+            <g id="silenceSeed" transform="translate(960 740)">
+              <circle r="4" fill="#8ff8ff" filter="url(#bigGlow)"/>
+              <circle r="26" fill="none" stroke="#38f0ff" stroke-width="1" opacity=".25"/>
+              <circle r="60" fill="none" stroke="#38f0ff" stroke-width="1" opacity=".1"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SCENE 04 — THE TEMPLE / DISCOVERY
+           ============================================================ -->
+      <div class="scene" id="s-temple">
+        <div class="cam">
+          <svg viewBox="0 0 1920 1080">
+            <!-- far sky through the arch -->
+            <rect x="0" y="0" width="1920" height="1080" fill="#05070f"/>
+            <ellipse cx="1080" cy="600" rx="640" ry="430" fill="#0a1630" opacity=".9" filter="url(#blur40)"/>
+            <ellipse cx="1140" cy="640" rx="260" ry="200" fill="#123a5e" opacity=".5" filter="url(#blur40)"/>
+            <g id="templeStars"></g>
+
+            <!-- temple architecture -->
+            <g id="templeSet">
+              <!-- floor -->
+              <path d="M0 900 L1920 900 L1920 1080 L0 1080 Z" fill="#070a13"/>
+              <path d="M0 900 L960 860 L1920 900" stroke="rgba(120,160,220,.18)" stroke-width="2" fill="none"/>
+              <g stroke="rgba(120,160,220,.10)" stroke-width="1.5" fill="none">
+                <path d="M260 900 L120 1080"/><path d="M470 900 L380 1080"/><path d="M680 900 L640 1080"/>
+                <path d="M1240 900 L1280 1080"/><path d="M1450 900 L1540 1080"/><path d="M1660 900 L1800 1080"/>
+              </g>
+              <!-- dais -->
+              <ellipse cx="960" cy="880" rx="300" ry="56" fill="#0a0f1c" stroke="rgba(56,240,255,.18)" stroke-width="2"/>
+              <ellipse cx="960" cy="874" rx="210" ry="36" fill="none" stroke="rgba(56,240,255,.25)" stroke-width="1.5"/>
+              <ellipse cx="960" cy="868" rx="120" ry="20" fill="none" stroke="rgba(56,240,255,.3)" stroke-width="1.5" stroke-dasharray="6 8"/>
+
+              <!-- pillars -->
+              <g id="tpL">
+                <path d="M180 1080 L180 300 L420 300 L420 1080 Z" fill="#0a0e1a"/>
+                <path d="M180 300 L420 300 L400 250 L200 250 Z" fill="#0c1220"/>
+                <path d="M150 250 L450 250 L450 210 L150 210 Z" fill="#0a0e1a"/>
+                <path d="M210 340 L210 1080" stroke="rgba(80,110,170,.22)" stroke-width="2"/>
+                <path d="M390 340 L390 1080" stroke="rgba(80,110,170,.22)" stroke-width="2"/>
+                <g stroke="rgba(56,240,255,.28)" stroke-width="1.5" fill="none">
+                  <circle cx="300" cy="430" r="22"/>
+                  <circle cx="300" cy="430" r="34" stroke-dasharray="3 9"/>
+                  <path d="M278 470 L322 470"/>
+                  <path d="M276 530 C300 516 324 516 348 530" opacity=".6"/>
+                </g>
+                <g fill="none" stroke="rgba(56,240,255,.16)" stroke-width="1.5">
+                  <path d="M300 620 L300 760"/><path d="M300 620 L278 700"/><path d="M300 620 L322 700"/>
+                  <circle cx="300" cy="772" r="14"/>
+                </g>
+              </g>
+              <g id="tpR">
+                <path d="M1500 1080 L1500 300 L1740 300 L1740 1080 Z" fill="#0a0e1a"/>
+                <path d="M1500 300 L1740 300 L1720 250 L1520 250 Z" fill="#0c1220"/>
+                <path d="M1470 250 L1770 250 L1770 210 L1470 210 Z" fill="#0a0e1a"/>
+                <path d="M1530 340 L1530 1080" stroke="rgba(80,110,170,.22)" stroke-width="2"/>
+                <path d="M1710 340 L1710 1080" stroke="rgba(80,110,170,.22)" stroke-width="2"/>
+                <g stroke="rgba(181,123,255,.24)" stroke-width="1.5" fill="none">
+                  <circle cx="1620" cy="500" r="18"/>
+                  <circle cx="1620" cy="500" r="30" stroke-dasharray="3 9"/>
+                  <path d="M1590 620 L1650 620"/><path d="M1620 620 L1620 720"/>
+                </g>
+              </g>
+              <!-- lintel -->
+              <path d="M120 210 L1800 210 L1800 130 L120 130 Z" fill="#080c16"/>
+              <path d="M120 130 L1800 130 L1770 96 L150 96 Z" fill="#0a0f1c"/>
+              <g stroke="rgba(120,160,220,.2)" stroke-width="2" fill="none">
+                <path d="M250 170 L1670 170" stroke-dasharray="2 16"/>
+              </g>
+              <!-- engraving over arch -->
+              <g transform="translate(960 166)">
+                <circle r="30" fill="none" stroke="rgba(56,240,255,.35)" stroke-width="2"/>
+                <circle r="18" fill="none" stroke="rgba(56,240,255,.5)" stroke-width="1.5" stroke-dasharray="4 6"/>
+                <path d="M-10 0 L-2 8 L10 -8" stroke="#38f0ff" stroke-width="2.5" fill="none" opacity=".8"/>
+              </g>
+              <!-- broken foreground column -->
+              <path d="M60 1080 L60 700 L140 660 L210 700 L210 1080 Z" fill="#05070e"/>
+              <path d="M60 700 L140 656 L210 700 L140 730 Z" fill="#0a0f1a"/>
+              <path d="M120 660 L130 500 L150 498 L156 662 Z" fill="#070a14"/>
+              <!-- rubble -->
+              <path d="M0 1080 L0 1010 L90 980 L180 1016 L260 1002 L300 1080 Z" fill="#05070e"/>
+              <path d="M1620 1080 L1700 1000 L1790 990 L1920 1030 L1920 1080 Z" fill="#05070e"/>
+            </g>
+
+            <!-- volumetric light -->
+            <path d="M300 210 L700 880 L980 880 L640 210 Z" fill="url(#beamGrad)" opacity=".35"/>
+            <path d="M1500 210 L1180 880 L980 880 L1280 210 Z" fill="url(#beamGrad2)" opacity=".25"/>
+
+            <!-- K'lar wide silhouette -->
+            <g id="templeKlar" transform="translate(960 700)" filter="drop-shadow(0 0 12px rgba(56,240,255,.16))">
+              <ellipse cx="0" cy="232" rx="140" ry="18" fill="#000" opacity=".55" filter="url(#blur8)"/>
+              <g fill="#03050c">
+                <!-- legs -->
+                <path d="M-36 140 L-46 232 L-12 232 L-6 140 Z"/>
+                <path d="M36 140 L46 232 L12 232 L6 140 Z"/>
+                <!-- hips / torso -->
+                <path d="M-62 66 C-44 44 44 44 62 66 L70 130 C70 152 40 162 0 162 C-40 162 -70 152 -70 130 Z"/>
+                <!-- hunched shoulders -->
+                <path d="M-70 62 C-96 74 -108 100 -104 130 L-86 126 C-88 102 -80 86 -62 78 Z"/>
+                <path d="M70 62 C96 74 108 100 104 130 L86 126 C88 102 80 86 62 78 Z"/>
+                <!-- arms -->
+                <path d="M-62 84 C-84 100 -94 144 -92 172 L-72 176 C-76 148 -68 112 -54 98 Z"/>
+                <path d="M64 86 C82 104 88 140 84 166 L66 162 C68 138 64 110 54 98 Z"/>
+                <circle cx="-82" cy="178" r="17"/>
+                <circle cx="76" cy="170" r="15"/>
+                <!-- head, facing left -->
+                <path d="M-32 68 L-32 22 C-32 -2 -14 -18 6 -18 C26 -18 40 -2 40 20 L40 66 C14 76 -10 76 -32 68 Z"/>
+                <path d="M-30 26 C-44 26 -54 34 -54 44 C-54 54 -44 62 -30 62 Z"/>
+              </g>
+              <!-- headband -->
+              <path d="M-33 20 C-10 10 22 10 41 20 L41 34 C20 24 -10 24 -33 34 Z" fill="#2a44c9" opacity=".95"/>
+              <!-- headband tails at the back -->
+              <path d="M36 18 C52 16 62 24 66 38 C56 30 46 28 36 30 Z" fill="#2338ae"/>
+              <path d="M38 32 C50 38 56 50 56 62 C48 50 42 44 34 42 Z" fill="#1b2b93"/>
+              <!-- goggles -->
+              <g fill="#ff2f4d" filter="url(#softGlow)">
+                <rect x="-28" y="38" width="24" height="10" rx="4"/>
+                <rect x="0" y="38" width="24" height="10" rx="4"/>
+              </g>
+              <!-- staff -->
+              <path d="M84 210 L84 -150" stroke="#050810" stroke-width="10" stroke-linecap="round"/>
+              <path d="M84 210 L84 -150" stroke="rgba(56,240,255,.22)" stroke-width="2"/>
+              <g transform="translate(84 -176)">
+                <path d="M0 -38 L20 -6 L0 34 L-20 -6 Z" fill="#38f0ff" filter="url(#softGlow)" opacity=".9"/>
+                <path d="M0 -22 L10 -4 L0 18 L-10 -4 Z" fill="#e9ffff"/>
+              </g>
+            </g>
+
+            <!-- the chain discover -->
+            <g id="templeChain" transform="translate(960 740)">
+              <g id="chainSphere"></g>
+              <circle id="chainCore" r="0" fill="#d8ffff" filter="url(#bigGlow)"/>
+            </g>
+
+            <!-- close-up reveal -->
+            <g id="templeBust" opacity="0" transform="translate(960 612) scale(1.03)">
+              <use href="#klarBust" x="-500" y="-500" width="1000" height="1000"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SCENE 05 — THE TREATY
+           ============================================================ -->
+      <div class="scene" id="s-alliance">
+        <div class="cam">
+          <svg viewBox="0 0 1920 1080">
+            <circle cx="1380" cy="300" r="420" fill="url(#moonHaze)"/>
+            <circle cx="1380" cy="296" r="198" fill="url(#moonGrad)" opacity=".82"/>
+            <g fill="#5f6d9e" opacity=".4">
+              <circle cx="1322" cy="252" r="32"/><circle cx="1412" cy="332" r="42"/>
+              <circle cx="1448" cy="228" r="18"/><circle cx="1310" cy="352" r="16"/>
+            </g>
+            <circle cx="1380" cy="296" r="198" fill="url(#moonShade)"/>
+            <circle cx="1380" cy="296" r="198" fill="none" stroke="rgba(200,220,255,.18)" stroke-width="2"/>
+            <circle cx="1380" cy="296" r="252" fill="none" stroke="rgba(200,220,255,.07)" stroke-width="1" stroke-dasharray="2 18"/>
+
+            <!-- floating island -->
+            <g id="allyIsland" opacity=".6">
+              <path d="M420 470 L620 430 L760 470 L700 500 L480 500 Z" fill="#0a1224"/>
+              <path d="M470 500 L700 500 L640 620 L520 620 Z" fill="#060a14"/>
+              <g fill="#0c1730">
+                <rect x="520" y="410" width="24" height="70"/><rect x="570" y="392" width="30" height="88"/>
+                <rect x="624" y="418" width="20" height="60"/><rect x="666" y="440" width="26" height="40"/>
+              </g>
+              <g fill="#38f0ff" opacity=".6">
+                <rect x="526" y="424" width="4" height="4"/><rect x="580" y="408" width="4" height="4"/>
+                <rect x="594" y="430" width="4" height="4"/><rect x="632" y="434" width="4" height="4"/>
+              </g>
+              <path d="M600 500 L600 640" stroke="#38f0ff" stroke-width="2" opacity=".3"/>
+              <path d="M480 500 L600 560 L700 500" fill="none" stroke="rgba(56,240,255,.15)" stroke-width="1.5"/>
+            </g>
+
+            <!-- far ridge -->
+            <path d="M0 720 L150 664 L300 706 L430 670 L560 716 L720 700 L860 734 L1920 742 L1920 1080 L0 1080 Z" fill="#060a14"/>
+            <path d="M0 720 L150 664 L300 706 L430 670 L560 716 L720 700 L860 734 L1920 742"
+                  fill="none" stroke="rgba(120,160,220,.14)" stroke-width="2"/>
+
+            <!-- ruined temple colonnade -->
+            <g fill="#050810" stroke="rgba(120,160,220,.12)" stroke-width="1.5">
+              <path d="M60 1080 L60 560 L70 532 L120 532 L130 560 L130 1080 Z"/>
+              <path d="M1740 1080 L1740 588 L1750 560 L1810 560 L1820 588 L1820 1080 Z"/>
+              <path d="M250 1080 L250 700 L258 682 L296 682 L304 700 L304 1080 Z"/>
+              <path d="M1640 1080 L1640 720 L1648 702 L1686 702 L1694 720 L1694 1080 Z"/>
+            </g>
+            <g stroke="rgba(56,240,255,.16)" stroke-width="1.2" fill="none">
+              <circle cx="95" cy="640" r="16"/><circle cx="95" cy="640" r="24" stroke-dasharray="3 7"/>
+              <circle cx="1780" cy="668" r="14"/><circle cx="1780" cy="668" r="22" stroke-dasharray="3 7"/>
+            </g>
+
+            <!-- ground platforms -->
+            <path d="M0 900 L640 900 L600 930 L660 960 L600 980 L620 1000 L560 1080 L0 1080 Z" fill="#03050c"/>
+            <path d="M1920 900 L1280 900 L1320 930 L1260 960 L1320 980 L1300 1000 L1360 1080 L1920 1080 Z" fill="#03050c"/>
+            <path d="M0 900 L640 900 L600 930 L660 960 L600 980 L620 1000 L560 1080" fill="none" stroke="rgba(56,240,255,.18)" stroke-width="2"/>
+            <path d="M1920 900 L1280 900 L1320 930 L1260 960 L1320 980 L1300 1000 L1360 1080" fill="none" stroke="rgba(20,241,149,.16)" stroke-width="2"/>
+
+            <!-- chasm mist -->
+            <ellipse cx="960" cy="980" rx="420" ry="110" fill="#0f2036" opacity=".55" filter="url(#blur40)"/>
+            <ellipse cx="960" cy="1040" rx="700" ry="120" fill="#071018" opacity=".9" filter="url(#blur22)"/>
+
+            <!-- left legion : the ApeX -->
+            <g id="apeLegion"></g>
+            <!-- right legion : the Pepe Legion -->
+            <g id="pepeLegion"></g>
+
+            <!-- the bridge of chain -->
+            <g id="allyBridge">
+              <path id="bridgeGlow" d="M660 928 C800 830 1120 830 1260 928" stroke="url(#chainStroke)" stroke-width="18" fill="none" opacity=".35" filter="url(#blur8)"/>
+              <path id="bridgeLine" d="M660 928 C800 830 1120 830 1260 928" stroke="url(#chainStroke)" stroke-width="2.5" fill="none"/>
+              <g id="bridgeLinks"></g>
+            </g>
+
+            <!-- treaty sigil -->
+            <g id="allySigil" transform="translate(960 760)" opacity="0">
+              <circle r="76" fill="#05070f" opacity=".55"/>
+              <circle r="86" fill="none" stroke="#38f0ff" stroke-width="2" opacity=".8"/>
+              <circle r="60" cx="-26" cy="0" fill="none" stroke="#38f0ff" stroke-width="3" opacity=".9"/>
+              <circle r="60" cx="26" cy="0" fill="none" stroke="#14f195" stroke-width="3" opacity=".9"/>
+              <circle r="118" fill="none" stroke="#b57bff" stroke-width="1" stroke-dasharray="4 12" opacity=".7"/>
+              <path d="M-14 -22 L0 -8 L16 -28" stroke="#fff" stroke-width="3" fill="none" opacity=".9"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SCENE 06 — THE GUARDIAN
+           ============================================================ -->
+      <div class="scene" id="s-guardian">
+        <div class="cam">
+          <svg viewBox="0 0 1920 1080">
+            <g id="guardHalo" transform="translate(1080 440)" opacity=".85">
+              <circle r="330" fill="none" stroke="rgba(56,240,255,.16)" stroke-width="1.5"/>
+              <circle r="390" fill="none" stroke="rgba(56,240,255,.10)" stroke-width="1" stroke-dasharray="2 18"/>
+              <g id="guardLinks"></g>
+            </g>
+            <ellipse cx="960" cy="880" rx="700" ry="110" fill="#0a1730" opacity=".6" filter="url(#blur40)"/>
+            <g id="guardBust" transform="translate(1080 540) scale(0.94)">
+              <use href="#klarBust" x="-500" y="-500" width="1000" height="1000"/>
+            </g>
+            <!-- legions at his feet -->
+            <g id="guardLegion"></g>
+            <!-- staff -->
+            <g id="guardStaff" transform="translate(1610 430)">
+              <path d="M0 -210 L0 470" stroke="#050812" stroke-width="14" stroke-linecap="round"/>
+              <path d="M0 -210 L0 470" stroke="rgba(56,240,255,.35)" stroke-width="2"/>
+              <g transform="translate(0 -250)">
+                <path d="M0 -100 L52 -18 L0 96 L-52 -18 Z" fill="#7b4bff" opacity=".5" filter="url(#bigGlow)"/>
+                <path d="M0 -80 L38 -16 L0 74 L-38 -16 Z" fill="url(#solGrad)" opacity=".95"/>
+                <path d="M0 -58 L22 -12 L0 46 L-22 -12 Z" fill="#eaf6ff"/>
+                <circle r="64" fill="none" stroke="#b57bff" stroke-width="1.5" opacity=".5"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SCENE 07 — ASCENSION
+           ============================================================ -->
+      <div class="scene" id="s-ascend">
+        <div class="cam">
+          <svg viewBox="0 0 1920 1080">
+            <circle cx="360" cy="250" r="420" fill="url(#moonHaze)"/>
+            <circle cx="360" cy="246" r="172" fill="url(#moonGrad)" opacity=".8"/>
+            <circle cx="360" cy="246" r="172" fill="none" stroke="rgba(200,220,255,.2)" stroke-width="2"/>
+            <g fill="#5f6d9e" opacity=".4">
+              <circle cx="308" cy="210" r="24"/><circle cx="392" cy="292" r="32"/><circle cx="412" cy="196" r="13"/>
+            </g>
+            <circle cx="360" cy="246" r="172" fill="url(#moonShade)"/>
+            <circle cx="360" cy="246" r="220" fill="none" stroke="rgba(200,220,255,.08)" stroke-width="1" stroke-dasharray="2 16"/>
+
+            <!-- distant glow -->
+            <ellipse cx="1000" cy="700" rx="720" ry="340" fill="#0a2038" opacity=".45" filter="url(#blur40)"/>
+
+            <g id="ascendCity"></g>
+            <ellipse cx="960" cy="900" rx="1100" ry="120" fill="#0a1830" opacity=".45" filter="url(#blur40)"/>
+            <ellipse cx="700" cy="1010" rx="900" ry="110" fill="#071220" opacity=".6" filter="url(#blur40)"/>
+            <g id="ascendConstel"></g>
+
+            <!-- chain elevator / ascension beam -->
+            <path d="M944 1080 L952 1080 L968 700 L928 700 Z" fill="url(#beamGrad)" opacity=".35"/>
+            <path d="M958 1080 L962 1080 L962 710" stroke="#8ff8ff" stroke-width="1.5" opacity=".35"/>
+
+            <!-- foreground ruins -->
+            <path d="M0 1080 L0 966 L110 930 L190 954 L280 918 L400 960 L470 1080 Z" fill="#02040a"/>
+            <path d="M120 930 L128 820 L160 812 L172 930 Z" fill="#02040a"/>
+            <path d="M1500 1080 L1550 946 L1640 916 L1730 952 L1920 930 L1920 1080 Z" fill="#02040a"/>
+
+            <!-- watcher on the ledge -->
+            <g transform="translate(1720 1108)">
+              <use href="#apeSil" x="-130" y="-390" width="260" height="390" fill="#02040a"
+                   filter="drop-shadow(0 0 12px rgba(56,240,255,.22))"/>
+              <path d="M-70 -300 L-58 -292 L-46 -304" stroke="rgba(56,240,255,.3)" stroke-width="2" fill="none"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SCENE 08 — END CARD
+           ============================================================ -->
+      <div class="scene" id="s-end">
+        <div class="cam">
+          <svg viewBox="0 0 1920 1080">
+            <g id="endRing" transform="translate(960 500)">
+              <circle r="260" fill="none" stroke="rgba(56,240,255,.10)" stroke-width="1.5"/>
+              <circle r="330" fill="none" stroke="rgba(181,123,255,.10)" stroke-width="1" stroke-dasharray="2 16"/>
+              <g id="endLinks"></g>
+            </g>
+          </svg>
+        </div>
+        <div id="endcard">
+          <div class="e-eyebrow">BORN OF THE CHAIN · GUARDIAN OF THE NETWORK</div>
+          <h1><span class="l1">APEX</span><span class="l2">ASCENSION</span></h1>
+          <div class="e-tag">FORGED FOR ASCENSION</div>
+          <div class="e-rule"></div>
+          <div class="e-line">We do not ascend by standing alone.</div>
+          <div class="e-final">THE CHAIN ENDURES<span class="cursor">_</span></div>
+          <div class="e-credit">AN ANIMATED SHORT · THE LEGION RISES TOGETHER</div>
+          <button class="replay" id="replayBtn"><span class="tri"></span> REPLAY</button>
+        </div>
+      </div>
+
+      <!-- ================= TITLES ================= -->
+      <div id="titles">
+        <!-- 00 COLD OPEN -->
+        <div class="cue center hero" data-in="0.9" data-out="7.6" id="coldopen">
+          <div class="eyebrow">A MOTION CHRONICLE · THE TABLET OF TRUTH</div>
+          <h2><span class="ln"><i>THE CHAIN</i></span><span class="ln"><i class="grad">ENDURES.</i></span></h2>
+          <div class="sub">BORN OF THE CHAIN &nbsp;·&nbsp; GUARDIAN OF THE NETWORK &nbsp;·&nbsp; FORGED FOR ASCENSION</div>
+        </div>
+
+        <!-- 01 THE REACH -->
+        <div class="cue lower" data-in="10.4" data-out="16.2">
+          <div class="eyebrow crimson">THE FIRST AGE</div>
+          <h2><span class="ln"><i>One power decided</i></span><span class="ln"><i>who might <em class="crimson">connect</em>.</i></span></h2>
+        </div>
+        <div class="cue lower" data-in="16.8" data-out="22.2">
+          <div class="eyebrow crimson" data-delay="0">THE REACH</div>
+          <h2><span class="ln"><i>Its grip was total.</i></span><span class="ln"><i>Its <em class="crimson">fragility</em>, built in.</i></span></h2>
+          <div class="sub">ABSOLUTE CONTROL CARRIES THE SEEDS OF ITS OWN COLLAPSE</div>
+        </div>
+        <div class="cue lower" data-in="22.6" data-out="27">
+          <h2><span class="ln"><i>A network of one</i></span><span class="ln"><i>is a <em class="crimson">single point of failure</em>.</i></span></h2>
+        </div>
+
+        <!-- 02 DISCONNECTION -->
+        <div class="cue hero center glitch" data-in="27.8" data-out="34.2">
+          <h2 data-text="THE GREAT DISCONNECTION">THE GREAT<br>DISCONNECTION</h2>
+          <div class="sub">THE NETWORK COLLAPSED INTO ISOLATION</div>
+        </div>
+        <div class="cue lower" data-in="34.8" data-out="39.4">
+          <h2><span class="ln"><i>A civilization divided.</i></span><span class="ln"><i>Every node, alone.</i></span></h2>
+        </div>
+
+        <!-- 03 SILENCE -->
+        <div class="cue center" data-in="40.6" data-out="46.8">
+          <div class="eyebrow">THE SILENCE</div>
+          <h2><span class="ln"><i>Isolation was not peace.</i></span></h2>
+          <div class="sub">IT WAS SILENCE</div>
+        </div>
+
+        <!-- 04 TEMPLE -->
+        <div class="cue lower" data-in="48.2" data-out="53.8">
+          <div class="eyebrow">THE DISCOVERY</div>
+          <h2><span class="ln"><i>Within an ancient temple,</i></span><span class="ln"><i>the Iron Ape found <em>the Chain</em>.</i></span></h2>
+        </div>
+        <div class="cue lower" data-in="54.4" data-out="59.2">
+          <h2><span class="ln"><i>Not armor.</i></span><span class="ln"><i>Not an instrument.</i></span></h2>
+          <div class="sub">AN IDEA</div>
+        </div>
+        <div class="cue lower" data-in="59.6" data-out="64.4">
+          <h2><span class="ln"><i>That a civilization could rise</i></span><span class="ln"><i>by <em>connecting</em> its strengths.</i></span></h2>
+        </div>
+        <div class="cue lower" data-in="64.8" data-out="70.4">
+          <div class="eyebrow">K'LAR · THE FIRST APEX</div>
+          <h2><span class="ln"><i>The Iron Ape.</i></span><span class="ln"><i>Builder. Inventor. <em>Guardian</em>.</i></span></h2>
+        </div>
+
+        <!-- 05 ALLIANCE -->
+        <div class="cue midlower" data-in="72.2" data-out="77.4">
+          <div class="eyebrow green">THE DIGITAL SAVANNAH</div>
+          <h2><span class="ln"><i>From the chaos came</i></span><span class="ln"><i>the <em class="green">Pepe Legion</em>.</i></span></h2>
+        </div>
+        <div class="cue midlower" data-in="77.8" data-out="82.6">
+          <h2><span class="ln"><i>Where K'lar saw patterns,</i></span><span class="ln"><i><em class="green">P</em> saw possibility.</i></span></h2>
+        </div>
+        <div class="cue center hero" data-in="82.8" data-out="88.8">
+          <div class="eyebrow">THE TREATY OF THE TWO LEGIONS</div>
+          <h2><span class="ln"><i>STRENGTH AND</i></span><span class="ln"><i class="grad">CREATIVITY.</i></span></h2>
+          <div class="sub">NEITHER SURRENDERING ITS IDENTITY</div>
+        </div>
+
+        <!-- 06 GUARDIAN -->
+        <div class="cue hero lower" data-in="90.2" data-out="96.2">
+          <div class="eyebrow">THE FOUNDER · ROLE III</div>
+          <h2><span class="ln"><i>GUARDIAN</i></span><span class="ln"><i class="ghost">NOT RULER</i></span></h2>
+        </div>
+        <div class="cue lower" data-in="96.6" data-out="100.4">
+          <h2><span class="ln"><i>Not because he conquered every rival —</i></span></h2>
+          <div class="sub">BECAUSE HE PROVED WHAT CONNECTION COULD BUILD</div>
+        </div>
+        <div class="cue lower" data-in="100.6" data-out="105.6">
+          <h2><span class="ln"><i>The Guardian serves the network.</i></span><span class="ln"><i>The network does not exist</i></span><span class="ln"><i>to serve the Guardian.</i></span></h2>
+        </div>
+
+        <!-- 07 ASCENSION -->
+        <div class="cue lower" data-in="106.4" data-out="111.6">
+          <div class="eyebrow">THE HORIZON</div>
+          <h2><span class="ln"><i>Beyond Lily-Pad City lie sectors</i></span><span class="ln"><i>no inventor has yet imagined.</i></span></h2>
+        </div>
+        <div class="cue lower" data-in="111.9" data-out="115.6">
+          <h2><span class="ln"><i>New guardians will rise.</i></span><span class="ln"><i>New creators will emerge.</i></span></h2>
+        </div>
+        <div class="cue center hero" data-in="115.9" data-out="121">
+          <h2><span class="ln"><i>THE STORY IS NOT</i></span><span class="ln"><i class="grad">FINISHED.</i></span></h2>
+          <div class="sub">IT BELONGS TO EVERYONE WHO BUILDS WHAT COMES NEXT</div>
+        </div>
+        <div class="cue center" data-in="121.2" data-out="126">
+          <h2><span class="ln"><i>We do not ascend</i></span><span class="ln"><i>by standing alone.</i></span></h2>
+        </div>
+      </div>
+
+      <!-- ================= FILM OVERLAYS ================= -->
+      <div class="bars"></div>
+      <div class="vignette"></div>
+      <div class="grain"></div>
+      <div class="scan"></div>
+      <div class="flash" id="flash"></div>
+
+      <!-- ================= HUD ================= -->
+      <div id="hud">
+        <div class="bracket tl"></div><div class="bracket tr"></div>
+        <div class="bracket bl"></div><div class="bracket br"></div>
+        <div class="row top">
+          <div class="tag"><span class="dot"></span><span class="live">REC</span><span>APX // LORE ARCHIVE</span></div>
+          <div class="tag">THE CHAIN ENDURES · A MOTION CHRONICLE</div>
+        </div>
+        <div class="row bot">
+          <div class="tag scene-tag"><b id="sceneIdx">01</b><span id="sceneName">THE REACH</span></div>
+          <div class="tag"><span>TC</span><span class="tc"><b id="tc">00:00:00</b></span></div>
+        </div>
+      </div>
+
+      <!-- ================= POSTER ================= -->
+      <div id="poster">
+        <svg class="crest" viewBox="0 0 520 520" aria-hidden="true">
+          <g fill="none" transform="translate(260 260)">
+            <circle r="236" stroke="rgba(56,240,255,.10)" stroke-width="1"/>
+            <circle r="206" stroke="rgba(56,240,255,.16)" stroke-width="1" stroke-dasharray="2 14"/>
+            <circle r="150" stroke="rgba(181,123,255,.20)" stroke-width="1.5"/>
+            <g id="posterLinks"></g>
+            <circle r="72" stroke="rgba(56,240,255,.35)" stroke-width="2"/>
+            <g stroke="#38f0ff" stroke-width="2" opacity=".8">
+              <path d="M-26 -30 L-2 -6 L28 -40"/>
+            </g>
+          </g>
+        </svg>
+        <div class="p-eyebrow">THE TABLET OF TRUTH · AN ANIMATED SHORT</div>
+        <h1><span class="l1">APEX</span><span class="l2">ASCENSION</span></h1>
+        <p class="p-sub">A civilization divided. A founder who found <b>the Chain</b>. Two legions that chose alliance over conquest.</p>
+        <div class="p-meta">
+          <span>A FILM BY <b>THE LEGION</b></span>
+          <span>RUNTIME <b>02:20</b></span>
+          <span>FOUNDER <b>K'LAR</b></span>
+          <span>NETWORK <b>SOLANA</b></span>
+        </div>
+        <div class="p-actions">
+          <button class="playbtn" id="playBtn"><span class="tri"></span> PLAY THE FILM</button>
+          <div class="p-note">SOUND ON<span>HEADPHONES RECOMMENDED</span></div>
+        </div>
+      </div>
+
+    </div><!-- /stage -->
+  </div><!-- /stageWrap -->
+
+  <!-- ================= PORTRAIT HINT ================= -->
+  <div id="rotate">
+    <div class="r-inner">
+      <div class="r-phone"><span></span></div>
+      <div class="r-eyebrow">A MOTION CHRONICLE</div>
+      <div class="r-title">THE CHAIN ENDURES</div>
+      <p>Turn your device sideways for the full cinematic frame.</p>
+      <button id="rotateSkip">CONTINUE ANYWAY</button>
+    </div>
+  </div>
+
+  <!-- ================= CONTROLS ================= -->
+  <div id="controls">
+    <button class="ico" id="btnPlay" title="Play / pause (space)">
+      <svg viewBox="0 0 24 24" id="icPlay"><path d="M8 5l11 7-11 7z"/></svg>
+    </button>
+    <button class="ico" id="btnBack" title="Restart (R)">
+      <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H3a9 9 0 1 0 9-9z"/></svg>
+    </button>
+    <div class="ctc"><b id="cTime">00:00</b> / 02:20</div>
+    <div class="cscene" id="cScene">THE REACH</div>
+    <button class="ico" id="btnMute" title="Mute (M)">
+      <svg viewBox="0 0 24 24" id="icVol"><path d="M4 9v6h4l5 4V5L8 9H4zm11.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+    </button>
+    <button class="ico" id="btnFull" title="Fullscreen (F)">
+      <svg viewBox="0 0 24 24"><path d="M3 3h7v2H5v5H3V3zm11 0h7v7h-2V5h-5V3zM5 14v5h5v2H3v-7h2zm16 5v2h-7v-2h5v-5h2v5z"/></svg>
+    </button>
+  </div>
+  <div id="progress"><div class="fill" id="pfill"></div><div class="hit" id="phit"></div></div>
+</div>
+
+<script src="film.js"></script>
+</body>
+</html>

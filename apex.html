@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ApeX Ascension — Born of the Chain. Guardian of the Network.</title>
+<meta name="description" content="ApeX Ascension — the mythology, the Tablet of Truth, and the Legion. Founded by K'lar, the First ApeX. Built on Solana." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#05060b;
+  --bg-2:#080a14;
+  --panel:#0b0e1a;
+  --panel-2:#0e1224;
+  --ink:#eef1fb;
+  --muted:#9aa4c4;
+  --faint:#5c668a;
+  --border:rgba(130,155,225,0.14);
+  --border-strong:rgba(150,175,240,0.28);
+  --electric:#38f0ff;
+  --sol-blue:#3b82f6;
+  --sol-purple:#9b4dff;
+  --sol-green:#14f195;
+  --violet:#b57bff;
+  --crimson:#ff2f4d;
+  --crimson-soft:#ff5a72;
+  --amber:#ffab3d;
+  --chrome-1:#f4f7ff;
+  --chrome-2:#aeb7d6;
+  --chrome-3:#6b759c;
+  --wordmark: "Orbitron", system-ui, sans-serif;
+  --display: "Space Grotesk", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --maxw:1200px;
+  --glow-blue: 0 0 40px rgba(56,240,255,0.25);
+  --glow-purple: 0 0 50px rgba(155,77,255,0.28);
+  --glow-red: 0 0 45px rgba(255,47,76,0.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--display);
+  font-weight:300;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 82% -8%, rgba(155,77,255,0.16), transparent 60%),
+    radial-gradient(800px 700px at 8% 12%, rgba(56,240,255,0.10), transparent 55%),
+    radial-gradient(1000px 900px at 50% 110%, rgba(255,47,76,0.08), transparent 60%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 45%, var(--bg) 100%);
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+::selection{background:rgba(56,240,255,0.28);color:#fff}
+
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.eyebrow{
+  font-family:var(--mono);font-size:0.72rem;letter-spacing:0.42em;text-transform:uppercase;
+  color:var(--electric);display:inline-flex;align-items:center;gap:12px;
+}
+.eyebrow::before{content:"";width:34px;height:1px;background:linear-gradient(90deg,transparent,var(--electric))}
+.eyebrow.purple{color:var(--violet)}
+.eyebrow.purple::before{background:linear-gradient(90deg,transparent,var(--violet))}
+.eyebrow.crimson{color:var(--crimson-soft)}
+.eyebrow.crimson::before{background:linear-gradient(90deg,transparent,var(--crimson))}
+
+/* ---------- Skip link ---------- */
+.skip{position:absolute;left:-999px;top:0;background:var(--electric);color:#001016;padding:12px 18px;z-index:200;font-family:var(--mono);font-size:0.8rem}
+.skip:focus{left:12px;top:12px}
+
+/* ---------- Nav ---------- */
+header.site{position:fixed;top:0;left:0;right:0;z-index:100;opacity:1;transition:background .4s ease,border-color .4s ease,backdrop-filter .4s ease,opacity .4s ease,transform .4s ease;border-bottom:1px solid transparent}
+header.site.scrolled{background:rgba(5,6,11,0.82);backdrop-filter:blur(14px);border-bottom-color:var(--border)}
+header.site.hidden{opacity:0;transform:translateY(-100%);pointer-events:none}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+.brand{display:flex;align-items:center;gap:8px;font-family:var(--wordmark);letter-spacing:0.12em;font-weight:700;font-size:0.6rem;background:#000;padding:4px 10px;border-radius:4px;min-height:48px;height:48px;overflow:hidden}
+.brand .brand-logo{width:22px;height:22px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1px rgba(255,255,255,0.12)}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.35);opacity:.6}}
+.brand small{display:block;font-family:var(--mono);font-size:0.45rem;letter-spacing:0.3em;color:var(--faint);font-weight:400;margin-top:1px;line-height:1}
+.nav-links{display:flex;align-items:center;gap:34px;background:#000;padding:8px 16px;border-radius:4px;min-height:48px;height:48px}
+.nav-links a{font-family:var(--mono);font-size:0.74rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);position:relative;padding:6px 0;transition:color .25s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--electric);transition:width .3s}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
+.btn{
+  font-family:var(--mono);font-size:0.74rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:500;
+  padding:12px 22px;border-radius:2px;border:1px solid var(--border-strong);color:var(--ink);
+  background:transparent;cursor:pointer;transition:all .28s ease;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:9px;
+}
+.btn:hover{border-color:var(--electric);color:var(--electric);box-shadow:var(--glow-blue)}
+.btn.primary{
+  border-color:transparent;color:#04121a;font-weight:600;
+  background:linear-gradient(100deg,var(--electric),var(--sol-green));
+  box-shadow:0 0 26px rgba(56,240,255,0.35);
+}
+.btn.primary:hover{filter:brightness(1.08);box-shadow:0 0 40px rgba(56,240,255,0.55)}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+.burger span{width:24px;height:2px;background:var(--ink);transition:.3s}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding-top:74px;overflow:hidden}
+#chain-canvas{position:absolute;inset:0;z-index:0;opacity:0.55}
+.hero-bg-logo{position:fixed;inset:0;z-index:0;pointer-events:none;background:url('assets/bg-logo.jpg') center/contain no-repeat;opacity:0.12;mix-blend-mode:screen;filter:saturate(1.1) brightness(1.05)}
+.hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:center;width:100%;padding:40px 0}
+.hero-copy{max-width:640px}
+.hero h1{
+  font-family:var(--wordmark);font-weight:900;line-height:0.94;letter-spacing:0.02em;
+  font-size:clamp(2.9rem,7vw,5.6rem);margin:22px 0 8px;
+}
+.hero h1 .line2{
+  background:linear-gradient(100deg,var(--electric) 0%,var(--violet) 55%,var(--crimson) 120%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero h1 .line1,.hero h1 .line2{display:block}
+.hero .tag{font-size:clamp(1.02rem,1.6vw,1.28rem);color:var(--muted);font-weight:300;max-width:520px;line-height:1.7}
+.hero .tag b{color:var(--ink);font-weight:500}
+.hero-cta{display:flex;flex-wrap:wrap;gap:16px;margin-top:36px}
+.hero-meta{display:flex;gap:34px;margin-top:44px;flex-wrap:wrap}
+.hero-meta .m{display:flex;flex-direction:column;gap:3px}
+.hero-meta .m .k{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--faint)}
+.hero-meta .m .v{font-family:var(--wordmark);font-size:0.92rem;letter-spacing:0.08em;color:var(--electric)}
+.hero-portrait{position:relative}
+.hero-portrait .frame{
+  position:relative;border-radius:6px;overflow:hidden;
+  border:1px solid var(--border-strong);
+  box-shadow:0 40px 90px -30px rgba(56,240,255,0.35),0 0 0 1px rgba(56,240,255,0.06),inset 0 0 90px rgba(155,77,255,0.14);
+  aspect-ratio:4/5;
+}
+.hero-portrait img{width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(1.08)}
+.hero-portrait .frame::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(5,6,11,0.55) 100%),
+             radial-gradient(600px 300px at 70% 20%,rgba(255,47,76,0.16),transparent 60%);
+  pointer-events:none;
+}
+.hero-portrait .tagpill{
+  position:absolute;right:16px;top:16px;z-index:3;
+  font-family:var(--mono);font-size:0.66rem;letter-spacing:0.22em;text-transform:uppercase;
+  padding:9px 14px;border:1px solid var(--border-strong);background:rgba(5,6,11,0.6);backdrop-filter:blur(6px);
+  display:flex;align-items:center;gap:9px;color:var(--electric);
+}
+.hero-portrait .tagpill .d{width:7px;height:7px;border-radius:50%;background:var(--crimson);box-shadow:var(--glow-red)}
+.corner{position:absolute;width:16px;height:16px;border:1px solid var(--electric);opacity:.5;z-index:3}
+.corner.tl{top:10px;left:10px;border-right:0;border-bottom:0}
+.corner.tr{top:10px;right:10px;border-left:0;border-bottom:0}
+.corner.bl{bottom:10px;left:10px;border-right:0;border-top:0}
+.corner.br{bottom:10px;right:10px;border-left:0;border-top:0}
+.scroll-cue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--faint);font-family:var(--mono);font-size:0.6rem;letter-spacing:0.3em}
+.scroll-cue .bar{width:1px;height:40px;background:linear-gradient(180deg,var(--electric),transparent);animation:drop 2.2s ease-in-out infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- Section rhythm ---------- */
+section{position:relative;padding:120px 0}
+.sec-head{max-width:720px;margin-bottom:60px}
+.sec-head h2{font-family:var(--wordmark);font-weight:800;font-size:clamp(1.9rem,4vw,3.1rem);line-height:1.04;letter-spacing:0.01em;margin:18px 0 16px}
+.sec-head p{color:var(--muted);font-size:1.06rem;max-width:620px}
+.divider-rule{display:flex;align-items:center;gap:16px;margin:0 0 8px}
+.divider-rule .r{height:1px;width:60px;background:var(--border-strong)}
+.divider-rule.diamond::after{content:"◆";font-size:0.6rem;color:var(--electric)}
+
+/* ---------- The Chain ---------- */
+.chain{background:linear-gradient(180deg,transparent,rgba(155,77,255,0.05),transparent)}
+.chain-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.chain-visual{position:relative;aspect-ratio:1/1;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:radial-gradient(circle at 50% 40%,rgba(56,240,255,0.08),transparent 70%)}
+#chain-canvas2{position:absolute;inset:0;width:100%;height:100%}
+.chain-visual .ring-label{position:absolute;font-family:var(--mono);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.chain-visual .rl1{top:14px;left:50%;transform:translateX(-50%);color:var(--electric)}
+.chain-visual .rl2{bottom:14px;left:50%;transform:translateX(-50%);color:#ffe066}
+.chain-copy h2{font-family:var(--wordmark);font-weight:800;font-size:clamp(1.8rem,3.6vw,2.8rem);line-height:1.08;margin:16px 0 22px}
+.chain-copy p{color:var(--muted);margin-bottom:18px;max-width:520px}
+.chain-quote{font-family:var(--mono);font-size:0.82rem;letter-spacing:0.06em;color:var(--electric);border-left:2px solid var(--crimson);padding-left:18px;margin-top:28px;line-height:1.9}
+.pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.pill{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.16em;text-transform:uppercase;padding:8px 14px;border:1px solid var(--border);border-radius:100px;color:var(--muted)}
+.pill.on{border-color:var(--electric);color:var(--electric);background:rgba(56,240,255,0.06)}
+
+/* ---------- Lore timeline ---------- */
+.lore{overflow:hidden}
+.lore-head{max-width:820px;margin-bottom:64px}
+.timeline{position:relative;display:grid;gap:8px}
+.timeline::before{content:"";position:absolute;left:15px;top:12px;bottom:12px;width:1px;background:linear-gradient(180deg,var(--electric),var(--violet),var(--crimson),transparent)}
+.ch{position:relative;padding:0 0 30px 56px}
+.ch .node{position:absolute;left:6px;top:4px;width:20px;height:20px;border-radius:50%;border:2px solid var(--bg);background:var(--electric);box-shadow:0 0 0 3px rgba(56,240,255,0.14),var(--glow-blue)}
+.ch:nth-child(2) .node{background:var(--sol-blue);box-shadow:0 0 0 3px rgba(59,130,246,0.16)}
+.ch:nth-child(3) .node{background:var(--violet);box-shadow:0 0 0 3px rgba(181,123,255,0.16),var(--glow-purple)}
+.ch:nth-child(4) .node{background:var(--crimson);box-shadow:0 0 0 3px rgba(255,47,76,0.16),var(--glow-red)}
+.ch:nth-child(5) .node{background:var(--sol-green);box-shadow:0 0 0 3px rgba(20,241,149,0.16)}
+.ch .era{font-family:var(--mono);font-size:0.64rem;letter-spacing:0.26em;text-transform:uppercase;color:var(--faint)}
+.ch h3{font-family:var(--wordmark);font-weight:700;font-size:1.24rem;letter-spacing:0.02em;margin:6px 0 10px;color:var(--ink)}
+.ch p{color:var(--muted);max-width:640px;font-size:0.98rem}
+.ch .marker{display:inline-block;margin-top:12px;font-family:var(--mono);font-size:0.64rem;letter-spacing:0.2em;color:var(--electric);opacity:.7}
+
+/* ---------- Roles ---------- */
+.roles{background:linear-gradient(180deg,transparent,rgba(255,47,76,0.04),transparent)}
+.roles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.role{position:relative;border:1px solid var(--border);border-radius:6px;overflow:hidden;background:var(--panel);transition:transform .4s cubic-bezier(.2,.7,.2,1),border-color .4s}
+.role:hover{transform:translateY(-6px);border-color:var(--border-strong)}
+.role .img{aspect-ratio:4/5;overflow:hidden}
+.role .img img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .4s;filter:grayscale(0.15) contrast(1.05)}
+.role:hover .img img{transform:scale(1.05);filter:grayscale(0) contrast(1.1) saturate(1.1)}
+.role .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,11,0.05) 30%,rgba(5,6,11,0.85) 100%);pointer-events:none}
+.role .body{position:absolute;left:0;right:0;bottom:0;padding:24px 22px}
+.role .rk{font-family:var(--mono);font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--electric)}
+.role:nth-child(2) .rk{color:var(--violet)}
+.role:nth-child(3) .rk{color:var(--crimson-soft)}
+.role h3{font-family:var(--wordmark);font-weight:800;font-size:1.5rem;letter-spacing:0.03em;margin:6px 0 8px}
+.role p{color:#fff;font-size:0.9rem;line-height:1.6;font-weight:700}
+.role .glyph{position:absolute;top:16px;right:16px;font-family:var(--wordmark);font-weight:900;font-size:1.4rem;color:rgba(255,255,255,0.09);z-index:2}
+
+/* ---------- Tablet of Truth ---------- */
+.tablet{position:relative}
+.tablet-intro{text-align:center;max-width:780px;margin:0 auto 72px}
+.tablet-intro .pedestal{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.3em;text-transform:uppercase;color:#ffe066;text-shadow:0 0 8px rgba(255,224,102,0.7),0 0 16px rgba(255,224,102,0.35);margin-bottom:20px}
+.tablet-intro h2{font-family:var(--wordmark);font-weight:900;font-size:clamp(2rem,4.6vw,3.6rem);line-height:1.05;letter-spacing:0.02em;margin-bottom:20px;
+  background:linear-gradient(180deg,var(--chrome-1),var(--chrome-2) 55%,var(--chrome-3));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tablet-intro p{color:var(--muted);font-size:1.05rem}
+.tablet-intro .glyphs{display:flex;justify-content:center;gap:26px;margin-top:30px;font-family:var(--wordmark);font-weight:700;letter-spacing:0.1em;color:var(--faint);font-size:0.8rem}
+.tablet-intro .glyphs span:nth-child(1){color:var(--electric)}
+.tablet-intro .glyphs span:nth-child(2){color:var(--violet)}
+.tablet-intro .glyphs span:nth-child(3){color:var(--crimson-soft)}
+
+.edicts{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:80px}
+.edict{position:relative;padding:34px 28px 30px;border:1px solid var(--border);border-radius:6px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);overflow:hidden}
+.edict::before{content:"";position:absolute;top:0;left:0;right:0;height:2px}
+.edict:nth-child(1)::before{background:linear-gradient(90deg,transparent,var(--electric),transparent)}
+.edict:nth-child(2)::before{background:linear-gradient(90deg,transparent,var(--violet),transparent)}
+.edict:nth-child(3)::before{background:linear-gradient(90deg,transparent,var(--crimson),transparent)}
+.edict .num{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.28em;color:#ffe066;text-shadow:0 0 8px rgba(255,224,102,0.7),0 0 16px rgba(255,224,102,0.35);text-transform:uppercase}
+.edict h3{font-family:var(--wordmark);font-weight:800;font-size:1.3rem;letter-spacing:0.02em;margin:14px 0 18px}
+.edict:nth-child(1) h3{color:var(--electric)}
+.edict:nth-child(2) h3{color:var(--violet)}
+.edict:nth-child(3) h3{color:var(--crimson-soft)}
+.edict p{color:var(--muted);font-size:0.94rem;margin-bottom:12px}
+.edict p:last-child{margin-bottom:0}
+.edict .seal{margin-top:22px;font-family:var(--wordmark);font-weight:700;font-size:0.72rem;letter-spacing:0.18em;color:var(--ink);opacity:.55}
+
+.laws-wrap{margin-bottom:80px}
+.laws-head{text-align:center;margin-bottom:48px}
+.laws-head h2{font-family:var(--wordmark);font-weight:800;font-size:clamp(1.6rem,3.4vw,2.4rem);letter-spacing:0.02em}
+.laws{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.law{background:var(--panel);padding:34px 32px;position:relative;transition:background .35s}
+.law:hover{background:var(--panel-2)}
+.law .lk{display:flex;align-items:baseline;gap:14px;margin-bottom:14px}
+.law .ln{font-family:var(--mono);font-size:0.64rem;letter-spacing:0.24em;color:var(--faint);text-transform:uppercase}
+.law h3{font-family:var(--wordmark);font-weight:800;font-size:1.35rem;letter-spacing:0.04em;color:var(--electric)}
+.law:nth-child(even) h3{color:var(--violet)}
+.law .rule{width:44px;height:2px;background:linear-gradient(90deg,var(--crimson),transparent);margin-bottom:16px}
+.law p{color:var(--muted);font-size:0.96rem;margin-bottom:12px}
+.law p:last-child{margin-bottom:0}
+.law .em{color:var(--ink);font-weight:500}
+
+.inscription{position:relative;padding:56px 48px;border:1px solid var(--border-strong);border-radius:8px;text-align:center;overflow:hidden;
+  background:radial-gradient(700px 320px at 50% -20%,rgba(56,240,255,0.1),transparent 60%),linear-gradient(180deg,rgba(155,77,255,0.06),rgba(255,47,76,0.04))}
+.inscription::before,.inscription::after{content:"";position:absolute;left:0;right:0;height:1px}
+.inscription::before{top:0;background:linear-gradient(90deg,transparent,var(--electric),transparent)}
+.inscription::after{bottom:0;background:linear-gradient(90deg,transparent,var(--crimson),transparent)}
+.inscription .mark{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.34em;text-transform:uppercase;color:#ffe066;text-shadow:0 0 8px rgba(255,224,102,0.7),0 0 16px rgba(255,224,102,0.35);margin-bottom:26px}
+.inscription p{color:var(--ink);font-size:1.06rem;max-width:720px;margin:0 auto 14px;line-height:1.8;font-weight:300}
+.inscription p b{font-weight:600}
+.inscription .creed{font-family:var(--display);font-size:1.16rem;color:var(--ink);letter-spacing:0.01em;margin:30px auto 12px;max-width:640px;line-height:1.9}
+.inscription .creed .hl{color:var(--electric)}
+.inscription .triple{display:flex;justify-content:center;flex-wrap:wrap;gap:14px 34px;margin-top:34px;font-family:var(--wordmark);font-weight:800;letter-spacing:0.14em;font-size:1.02rem}
+.inscription .triple span{position:relative;padding:0 4px}
+.inscription .triple span::after{content:"";position:absolute;left:0;bottom:-6px;height:2px;width:100%;background:linear-gradient(90deg,var(--electric),var(--violet));opacity:.6}
+.inscription .triple span:nth-child(2){color:var(--violet)}
+.inscription .triple span:nth-child(3){color:var(--crimson-soft)}
+.inscription .signoff{margin-top:34px;font-family:var(--wordmark);font-weight:900;font-size:clamp(1rem,2.2vw,1.5rem);letter-spacing:0.06em;line-height:1.8}
+.inscription .signoff .a{background:linear-gradient(100deg,var(--electric),var(--violet),var(--crimson));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---------- Animated short ---------- */
+.film{position:relative}
+.film-inner{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.film-copy h2{font-family:var(--wordmark);font-weight:900;font-size:clamp(1.9rem,4vw,3.2rem);line-height:1.05;margin:16px 0 18px}
+.film-copy p{color:var(--muted);font-size:1.04rem;margin-bottom:16px;max-width:500px}
+.film-status{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);border:1px solid rgba(255,171,61,0.35);background:rgba(255,171,61,0.06);padding:8px 14px;border-radius:100px;margin-bottom:24px}
+.film-status .d{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);animation:pulse 2s infinite}
+.film-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}
+.player{position:relative;aspect-ratio:16/9;border:1px solid var(--border-strong);border-radius:8px;overflow:hidden;background:
+  radial-gradient(circle at 50% 45%,rgba(56,240,255,0.14),transparent 60%),#04060c;
+  box-shadow:0 40px 90px -34px rgba(155,77,255,0.4),inset 0 0 80px rgba(5,6,11,0.6)}
+.player video{width:100%;height:100%;object-fit:cover;display:block}
+.player .placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:var(--muted);text-align:center;padding:24px}
+.player .playbtn{width:76px;height:76px;border-radius:50%;border:1px solid var(--border-strong);background:rgba(5,6,11,0.5);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;transition:all .3s;box-shadow:var(--glow-purple)}
+.player .playbtn:hover{transform:scale(1.08);border-color:var(--electric);box-shadow:var(--glow-blue)}
+.player .playbtn svg{width:26px;height:26px;fill:var(--electric);margin-left:4px}
+.player .placeholder .pt{font-family:var(--wordmark);font-weight:700;letter-spacing:0.16em;font-size:0.82rem;color:var(--ink)}
+.player .placeholder .ps{font-family:var(--mono);font-size:0.64rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--faint);max-width:280px;line-height:1.8}
+.player .scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.015) 0 2px,transparent 2px 4px);mix-blend-mode:overlay}
+.player .dur{position:absolute;right:14px;bottom:12px;font-family:var(--mono);font-size:0.62rem;letter-spacing:0.14em;color:var(--faint);background:rgba(5,6,11,0.55);padding:4px 8px;border-radius:3px}
+
+/* ---------- Join / CTA ---------- */
+.join{text-align:center;position:relative;overflow:hidden}
+.join::before{content:"";position:absolute;inset:0;z-index:0;background:radial-gradient(700px 400px at 50% 30%,rgba(255,47,76,0.1),transparent 60%)}
+.join .in{position:relative;z-index:2;max-width:780px;margin:0 auto}
+.join-mascot{display:block;width:140px;height:140px;margin:0 auto 24px;border-radius:50%;object-fit:cover;border:2px solid var(--border-strong);box-shadow:0 0 40px rgba(56,240,255,0.25),0 0 0 1px rgba(155,77,255,0.2)}
+.join h2{font-family:var(--wordmark);font-weight:900;font-size:clamp(2rem,5vw,3.6rem);line-height:1.03;letter-spacing:0.02em;margin-bottom:20px}
+.join h2 .g{background:linear-gradient(100deg,var(--electric),var(--violet),var(--crimson));-webkit-background-clip:text;background-clip:text;color:transparent}
+.join p{color:var(--muted);font-size:1.08rem;margin-bottom:34px}
+.join .btn-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ticker-strip{display:flex;justify-content:center;gap:12px;margin-top:40px;flex-wrap:wrap}
+.ticker-strip .t{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.16em;padding:9px 16px;border:1px solid rgba(140,160,220,0.32);border-radius:2px;color:var(--muted)}
+.ticker-strip .t b{color:var(--electric);font-weight:600}
+
+/* ---------- Footer ---------- */
+footer.site{border-top:1px solid var(--border);padding:64px 0 40px;background:linear-gradient(180deg,transparent,rgba(5,6,11,0.6))}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.foot-brand .logo{font-family:var(--wordmark);font-weight:800;letter-spacing:0.14em;font-size:1.1rem;margin-bottom:14px}
+.foot-brand p{color:var(--muted);font-size:0.9rem;max-width:280px}
+.foot-col h4{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.24em;text-transform:uppercase;color:#ffe066;text-shadow:0 0 8px rgba(255,224,102,0.7),0 0 16px rgba(255,224,102,0.35);margin-bottom:16px}
+.foot-col a{display:block;color:var(--muted);font-size:0.92rem;margin-bottom:10px;transition:color .2s}
+.foot-col a:hover{color:var(--electric)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding-top:26px;border-top:1px solid var(--border)}
+.foot-bottom .c{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.08em;color:var(--faint)}
+.foot-bottom .disclaimer{font-family:var(--mono);font-size:0.64rem;letter-spacing:0.06em;color:var(--faint);max-width:560px;text-align:right;line-height:1.7}
+
+/* ---------- Reveal ---------- */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.dot,.scroll-cue .bar,.player .playbtn,.film-status .d{animation:none}}
+
+/* ---------- Responsive ---------- */
+@media (max-width:960px){
+  .hero-inner{grid-template-columns:1fr;gap:40px;padding:20px 0}
+  .hero-portrait{max-width:440px;margin:0 auto}
+  .chain-grid{grid-template-columns:1fr;gap:40px}
+  .film-inner{grid-template-columns:1fr;gap:36px}
+  .roles-grid{grid-template-columns:1fr;max-width:460px;margin:0 auto}
+  .edicts{grid-template-columns:1fr;max-width:520px;margin:0 auto 80px}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:720px){
+  section{padding:84px 0}
+  .nav-links,.nav-cta .btn{display:none}
+  .burger{display:flex}
+  .nav-links.open{display:flex;position:absolute;top:74px;left:0;right:0;flex-direction:column;gap:0;background:rgba(5,6,11,0.97);border-bottom:1px solid var(--border);padding:10px 0}
+  .nav-links.open a{padding:14px 28px;width:100%}
+  .laws{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .foot-bottom{flex-direction:column;align-items:flex-start}
+  .foot-bottom .disclaimer{text-align:left}
+  .hero-meta{gap:24px}
+  .wrap{padding:0 20px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#lore">Skip to the story</a>
+
+<header class="site" id="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="ApeX Ascension home">
+      <img class="brand-logo" src="assets/nav-logo.png" alt="" aria-hidden="true" />
+      <span>APEX<br/>ASCENSION<small>BORN OF THE CHAIN</small></span>
+    </a>
+    <nav class="nav-links" id="navlinks" aria-label="Primary">
+      <a href="#chain">The Chain</a>
+      <a href="#lore">The Lore</a>
+      <a href="#roles">K'lar</a>
+      <a href="#tablet">Tablet</a>
+      <a href="#film">The Film</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn" href="#tablet">Read the Tablet</a>
+      <a class="btn primary" href="https://t.me/theapexlegion" target="_blank" rel="noopener">Join the Legion</a>
+      <a class="btn" href="https://zealy.io/c/apexlegion" target="_blank" rel="noopener">Earn XP</a>
+      <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="hero">
+  <canvas id="chain-canvas" aria-hidden="true"></canvas>
+  <div class="hero-bg-logo" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow">The Tablet of Truth · ApeX Ascension</span>
+      <h1><span class="line1">APEX</span><span class="line2">ASCENSION</span></h1>
+      <p class="tag">A decentralized civilization rising from the ruins of the <b>Great Disconnection</b>. Founded by <b>K'lar, the First ApeX</b> — builder, inventor, and guardian of the Chain.</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#tablet">Read the Tablet of Truth</a>
+        <a class="btn" href="#lore">Enter the Lore</a>
+      </div>
+      <div class="hero-meta">
+        <div class="m"><span class="k">Founder</span><span class="v">K'LAR</span></div>
+        <div class="m"><span class="k">Community</span><span class="v">THE LEGION</span></div>
+        <div class="m"><span class="k">Ticker</span><span class="v">ApeX</span></div>
+        <div class="m"><span class="k">Network</span><span class="v">SOLANA</span></div>
+      </div>
+    </div>
+    <div class="hero-portrait reveal">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="frame">
+        <img src="assets/hero.jpg" alt="K'lar, the First ApeX — crimson goggles and the blue Solana headband" fetchpriority="high" />
+      </div>
+      <span class="tagpill"><span class="d"></span>K'LAR · THE FIRST APEX</span>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span>SCROLL</span><span class="bar"></span></div>
+</section>
+
+<!-- ===================== THE CHAIN ===================== -->
+<section class="chain" id="chain">
+  <div class="wrap chain-grid">
+    <div class="chain-visual reveal">
+      <canvas id="chain-canvas2" aria-hidden="true"></canvas>
+      <span class="ring-label rl1">Connect · Transmit · Empower · Ascend</span>
+      <span class="ring-label rl2">The Chain Endures</span>
+    </div>
+    <div class="chain-copy reveal d1">
+      <span class="eyebrow">The Philosophical Foundation</span>
+      <h2>The Chain is the idea that a civilization can rise by connecting the strengths of its participants.</h2>
+      <p>It represents connection, decentralization, and the ability to build beyond the limits imposed by centralized control. The Chain is not a single authority defining the limits of what a community can create — it is the path through which the Legion builds its future.</p>
+      <p>Where the Reach believed control could preserve dominion, the Chain proved that freedom and cooperation are the true sources of lasting strength.</p>
+      <div class="pill-row">
+        <span class="pill on">Decentralized</span>
+        <span class="pill">Connection over Isolation</span>
+        <span class="pill">Build, Don't Dominate</span>
+        <span class="pill">Freedom with Responsibility</span>
+      </div>
+      <blockquote class="chain-quote">"No single authority should define the limits<br/>of what a connected community can create."</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== THE LORE ===================== -->
+<section class="lore" id="lore">
+  <div class="wrap">
+    <div class="lore-head reveal">
+      <span class="eyebrow">The Chronicle of ApeX</span>
+      <h2 class="sec-head" style="margin:16px 0 0">From the Great Disconnection to the First Light of ApeX.</h2>
+      <p style="color:var(--muted);margin-top:18px;max-width:760px">A civilization divided. A founder who discovered the Chain. Two legions that chose alliance over conquest. This is how a fractured universe learned to rise together.</p>
+    </div>
+    <div class="timeline">
+      <div class="ch reveal">
+        <span class="node"></span>
+        <span class="era">The First Age</span>
+        <h3>The Great Disconnection</h3>
+        <p>The universe was ruled by the Reach — a single power that decided who might connect, who might create, and who might participate. Its absolute control carried the seeds of its own fragility, and the network collapsed into isolation.</p>
+        <span class="marker">↳ REMEMBER THE LESSON</span>
+      </div>
+      <div class="ch reveal d1">
+        <span class="node"></span>
+        <span class="era">The Discovery</span>
+        <h3>K'lar Finds the Chain</h3>
+        <p>Within an ancient temple, K'lar — the Iron Ape — discovered the Chain. His greatest invention was not armor or an instrument, but the idea that a civilization could rise by connecting the strengths of its participants. He began restoring what had been broken.</p>
+        <span class="marker">↳ THE FIRST APEX</span>
+      </div>
+      <div class="ch reveal d2">
+        <span class="node"></span>
+        <span class="era">The Alliance</span>
+        <h3>The Treaty of the Two Legions</h3>
+        <p>From the chaotic domains of the digital savannah came the Pepe Legion, led by the enigmatic P. Where K'lar saw patterns, P saw possibilities in chaos. Before the ruins of the temple, they sealed an alliance — strength and creativity united, neither surrendering its identity.</p>
+        <span class="marker">↳ THE APEX ASCENSION ALLIANCE</span>
+      </div>
+      <div class="ch reveal d3">
+        <span class="node"></span>
+        <span class="era">The Guardian</span>
+        <h3>Guardian, Not Ruler</h3>
+        <p>K'lar was recognized as Guardian of the Network — not because he conquered every rival, but because he proved that the greatest strength of a connected civilization lies in its ability to unite without demanding uniformity. The Guardian serves the network; the network does not exist to serve the Guardian.</p>
+        <span class="marker">↳ PRESERVE · CREATE · SERVE</span>
+      </div>
+      <div class="ch reveal d4">
+        <span class="node"></span>
+        <span class="era">The Horizon</span>
+        <h3>The Ongoing Ascension</h3>
+        <p>Beyond Lily-Pad City lie unexplored sectors, forgotten systems, and possibilities no inventor has yet imagined. New guardians will rise. New creators will emerge. The story is not finished — it belongs to everyone who helps shape what comes next.</p>
+        <span class="marker">↳ THE JOURNEY CONTINUES</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ROLES OF K'LAR ===================== -->
+<section class="roles" id="roles">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow crimson">The Founder · The Inventor · The Guardian</span>
+      <h2>Three roles. One founder.</h2>
+      <p>K'lar holds distinct roles, each with its own purpose — the pillars of the civilization he began.</p>
+    </div>
+    <div class="roles-grid">
+      <article class="role reveal">
+        <span class="glyph" aria-hidden="true">I</span>
+        <div class="img"><img src="assets/founder.png" alt="K'lar the Founder, before the floating city" loading="lazy" /></div>
+        <div class="veil"></div>
+        <div class="body">
+          <span class="rk">Role I</span>
+          <h3>The Founder</h3>
+          <p>He showed a fractured universe another way forward — that a builder could change the course of history, and that different forces could unite without becoming the same.</p>
+        </div>
+      </article>
+      <article class="role reveal d1">
+        <span class="glyph" aria-hidden="true">II</span>
+        <div class="img"><img src="assets/inventor.png" alt="K'lar the Inventor at the workbench of the Chain" loading="lazy" /></div>
+        <div class="veil"></div>
+        <div class="body">
+          <span class="rk">Role II</span>
+          <h3>The Inventor</h3>
+          <p>"Not all strength is physical. Some build connections." He turned imagination into reality, writing the protocols that let knowledge travel and ideas evolve beyond their creators.</p>
+        </div>
+      </article>
+      <article class="role reveal d2">
+        <span class="glyph" aria-hidden="true">III</span>
+        <div class="img"><img src="assets/guardian.png" alt="K'lar the Guardian, keeper of the network" loading="lazy" /></div>
+        <div class="veil"></div>
+        <div class="body">
+          <span class="rk">Role III</span>
+          <h3>The Guardian</h3>
+          <p>Born of the Chain. Guardian of the Network. Ruler of the Reaches. He protects what must endure — guarding the integrity of the network, the freedom to create, and the trust of cooperation.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TABLET OF TRUTH ===================== -->
+<section class="tablet" id="tablet">
+  <div class="wrap">
+    <div class="tablet-intro reveal">
+      <div class="divider-rule diamond"><span class="r"></span></div>
+      <div class="pedestal">As recorded upon the pedestal of the First Temple</div>
+      <h2>The Tablet of Truth</h2>
+      <p>Engraved upon ancient stone, preserved from the first age of the Chain — the foundational principles of the new era, standing above every other mark of the civilization.</p>
+      <div class="glyphs"><span>BORN OF THE CHAIN</span><span>GUARDIAN OF THE NETWORK</span><span>FORGED FOR ASCENSION</span></div>
+    </div>
+
+    <!-- THREE EDICTS -->
+    <div class="edicts">
+      <article class="edict reveal">
+        <span class="num">Edict I</span>
+        <h3>Born of the Chain</h3>
+        <p>We emerged from a world divided and discovered that connection could create what isolation could not. The Chain is the foundation of our mythology, the symbol of our interconnected universe, and the path through which the Legion builds its future.</p>
+        <p>We honor the principle that no single authority should define the limits of what a connected community can create.</p>
+        <div class="seal">◇ THE FOUNDATION</div>
+      </article>
+      <article class="edict reveal d1">
+        <span class="num">Edict II</span>
+        <h3>Guardian of the Network</h3>
+        <p>We protect the connections that allow our civilization to grow. We build rather than merely destroy. We create rather than merely consume. Lasting strength comes from the systems, communities, and shared efforts that make continued progress possible.</p>
+        <p>The Guardian's purpose is not domination. It is preservation, creation, and service to the network.</p>
+        <div class="seal">◇ THE PURPOSE</div>
+      </article>
+      <article class="edict reveal d2">
+        <span class="num">Edict III</span>
+        <h3>Forged for Ascension</h3>
+        <p>We do not regard the present state of the universe as the limit of its possibilities. We learn. We build. We connect. We evolve.</p>
+        <p>Ascension is the pursuit of what becomes possible when intelligence, creativity, resilience, and collective effort move toward a common horizon. The peak is approached by a civilization willing to rise together.</p>
+        <div class="seal">◇ THE HORIZON</div>
+      </article>
+    </div>
+
+    <!-- SIX LAWS -->
+    <div class="laws-wrap reveal">
+      <div class="laws-head">
+        <span class="eyebrow">From the Three Edicts</span>
+        <h2>The Law of the ApeX</h2>
+      </div>
+      <div class="laws">
+        <article class="law">
+          <div class="lk"><span class="ln">First Law</span><h3>Build</h3></div>
+          <div class="rule"></div>
+          <p>Creation is the answer to a broken world. When systems fail, build better ones. When pathways collapse, seek ways to reconnect them. When possibilities appear impossible, examine the problem until a new path emerges.</p>
+          <p class="em">The builder leaves more behind than the destruction of what came before.</p>
+        </article>
+        <article class="law">
+          <div class="lk"><span class="ln">Second Law</span><h3>Connect</h3></div>
+          <div class="rule"></div>
+          <p>No civilization reaches its full potential in isolation. Connection allows knowledge to travel, communities to cooperate, and ideas to evolve beyond the limits of their creators.</p>
+          <p class="em">We preserve our individuality while recognizing the strength of shared effort.</p>
+        </article>
+        <article class="law">
+          <div class="lk"><span class="ln">Third Law</span><h3>Guard</h3></div>
+          <div class="rule"></div>
+          <p>What is built must be protected. Guard the integrity of the network, the freedom to create, and the trust upon which cooperation depends. But protection must never become an excuse for domination.</p>
+          <p class="em">The Guardian serves the network. The network does not exist to serve the Guardian.</p>
+        </article>
+        <article class="law">
+          <div class="lk"><span class="ln">Fourth Law</span><h3>Create</h3></div>
+          <div class="rule"></div>
+          <p>Creativity is the force that carries a civilization beyond what it already knows. Honor the inventors, artists, storytellers, and innovators who give the Chain new purpose.</p>
+          <p class="em">A connected universe is a means of discovering what does not yet exist.</p>
+        </article>
+        <article class="law">
+          <div class="lk"><span class="ln">Fifth Law</span><h3>Ascend</h3></div>
+          <div class="rule"></div>
+          <p>Never confuse a milestone with the end of the journey. Every achievement creates new possibilities. Every discovery reveals new questions. Every generation inherits the responsibility to continue building.</p>
+          <p class="em">Ascension is not a promise that success is inevitable — it is the commitment to keep striving.</p>
+        </article>
+        <article class="law">
+          <div class="lk"><span class="ln">Sixth Law</span><h3>Remain Free</h3></div>
+          <div class="rule"></div>
+          <p>Remember the Great Disconnection. Remember what happens when a single power decides who may connect, create, and participate. Systems built upon absolute control carry the seeds of their own fragility.</p>
+          <p class="em">Freedom requires responsibility. Cooperation requires trust.</p>
+        </article>
+      </div>
+    </div>
+
+    <!-- SACRED INSCRIPTION -->
+    <div class="inscription reveal">
+      <div class="mark">The Sacred Inscription</div>
+      <p><b>Born of the Chain.</b> <b>Guardian of the Network.</b> <b>Forged for Ascension.</b></p>
+      <p>We are the builders of what comes next. We are the guardians of the connections that unite us. We are the inventors who see possibility where others see ruin. We are the creators who turn imagination into worlds.</p>
+      <p>We remember the Great Disconnection. We reject the belief that one power must control all others. We honor strength when it protects, intelligence when it creates, and creativity when it opens new paths.</p>
+      <p class="creed">We do not ascend by standing alone.<br/><span class="hl">We ascend by building what none of us could build alone.</span></p>
+      <p>The Chain is our foundation. The Legion is our fellowship. Creation is our calling. Freedom is our principle. And Ascension is our eternal pursuit.</p>
+      <div class="triple"><span>Let the Chain Endure.</span><span>Let the Legion Rise.</span><span>Let the Universe Ascend.</span></div>
+      <div class="signoff">THIS IS THE TABLET OF TRUTH.<br/>THIS IS THE LEGACY OF <span class="a">K'LAR.</span><br/>THIS IS <span class="a">APEX ASCENSION.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ANIMATED SHORT ===================== -->
+<section class="film" id="film">
+  <div class="wrap film-inner">
+    <div class="film-copy reveal">
+      <span class="film-status"><span class="d"></span>Full Animated Short Coming Soon</span>
+      <h2>The Ascension — animated short.</h2>
+      <p>A cinematic retelling of the lore: the Great Disconnection, the discovery of the Chain, and the sealing of the Treaty of the Two Legions. The story that began in the ancient temple, brought to motion.</p>
+      <p style="color:var(--faint);font-size:.92rem;font-family:var(--mono);letter-spacing:.06em">The trailer is playing above. The full animated short is in production — coming soon.</p>
+      <div class="film-cta">
+        <a class="btn primary" href="https://t.me/theapexlegion" target="_blank" rel="noopener">Join the Legion for the Premiere</a>
+        <a class="btn" href="#lore">Revisit the Lore</a>
+      </div>
+    </div>
+    <div class="player reveal d1">
+      <div class="scan" aria-hidden="true"></div>
+      <!-- VIDEO READY: when the short exists, remove the .placeholder block below
+           and the video will play. Set poster="assets/ascension-poster.jpg" optionally. -->
+      <video id="film-video" controls playsinline preload="metadata" poster="">
+        <source src="assets/short-final.mp4" type="video/mp4" />
+      </video>
+      <span class="dur" id="film-dur">TRAILER · SOON</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== JOIN ===================== -->
+<section class="join" id="join">
+  <div class="wrap in">
+    <div class="reveal">
+      <img class="join-mascot" src="assets/nav-logo.png" alt="K'lar, the First ApeX" />
+      <span class="eyebrow" style="justify-content:center">The ApeX Legion</span>
+      <h2>Build. Connect. <span class="g">Ascend.</span></h2>
+      <p>The Legion does not measure its worth by the number of its members or the noise of its celebrations. It measures its legacy by what it creates, what it protects, and what it makes possible for those who follow. This is how a legend becomes a living civilization.</p>
+      <div class="btn-row">
+        <a class="btn primary" href="#" aria-label="Buy $APEX on Solana">Buy $APEX</a>
+        <a class="btn" href="https://t.me/theapexlegion" target="_blank" rel="noopener" aria-label="Join the ApeX Legion on Telegram">Join the Legion</a>
+        <a class="btn" href="https://zealy.io/c/apexlegion" target="_blank" rel="noopener" aria-label="Earn XP on Zealy">Earn XP</a>
+      </div>
+      <div class="ticker-strip">
+        <span class="t">IDENTITY <b>APEX ASCENSION</b></span>
+        <span class="t">TICKER <b>ApeX</b></span>
+        <span class="t">CHAIN <b>SOLANA</b></span>
+        <span class="t">FOUNDER <b>K'LAR</b></span>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="logo"><img src="assets/nav-logo.png" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;margin-right:8px;vertical-align:middle" />APEX ASCENSION</div>
+        <p>Born of the Chain. Guardian of the Network. Forged for Ascension — the mythology and the Legion of K'lar, the First ApeX.</p>
+      </div>
+      <div class="foot-col">
+        <h4>The Tablet</h4>
+        <a href="#tablet">Three Edicts</a>
+        <a href="#tablet">Six Laws</a>
+        <a href="#tablet">Sacred Inscription</a>
+      </div>
+      <div class="foot-col">
+        <h4>The Lore</h4>
+        <a href="#chain">The Chain</a>
+        <a href="#lore">The Chronicle</a>
+        <a href="#roles">K'lar</a>
+        <a href="#film">The Film</a>
+      </div>
+      <div class="foot-col">
+        <h4>Join</h4>
+        <a href="#join">Buy $APEX</a>
+        <a href="#join">The Legion</a>
+        <a href="#top">Back to Top</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="c">© 2026 APEX ASCENSION · THE LEGION RISES TOGETHER</span>
+      <span class="disclaimer">NOT FINANCIAL ADVICE. $APEX is a community token on Solana; the Chain in this mythology is a narrative concept. Ascension is an ongoing journey, not a promise of return. Do your own research.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- Nav scroll state ---- */
+  var header = document.querySelector("header.site");
+  var onScroll = function(){ header.classList.toggle("scrolled", window.scrollY > 24); var hide = window.scrollY > 200; header.classList.toggle("hidden", hide); var nav = document.querySelector(".nav"); if(nav) nav.style.opacity = hide ? "0" : ""; };
+  onScroll(); window.addEventListener("scroll", onScroll, {passive:true});
+
+  /* ---- Mobile menu ---- */
+  var burger = document.getElementById("burger");
+  var links = document.getElementById("navlinks");
+  burger.addEventListener("click", function(){
+    var open = links.classList.toggle("open");
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  links.addEventListener("click", function(e){ if(e.target.tagName === "A"){ links.classList.remove("open"); burger.setAttribute("aria-expanded","false"); } });
+
+  /* ---- Reveal on scroll ---- */
+  var revs = document.querySelectorAll(".reveal");
+  if("IntersectionObserver" in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } });
+    }, {threshold:0.14, rootMargin:"0px 0px -8% 0px"});
+    revs.forEach(function(el){ io.observe(el); });
+  } else {
+    revs.forEach(function(el){ el.classList.add("in"); });
+  }
+
+  /* ---- Chain network canvas ---- */
+  function wireChain(canvasId, opts){
+    var canvas = document.getElementById(canvasId);
+    if(!canvas) return;
+    var ctx = canvas.getContext("2d");
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W, H, parts = [];
+    var COL = opts.color, N = opts.count, R = opts.radius, SP = opts.speed;
+    function resize(){
+      var r = canvas.getBoundingClientRect();
+      W = r.width; H = r.height;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      parts = [];
+      var total = Math.round((W*H)/opts.density);
+      total = Math.max(24, Math.min(total, N));
+      for(var i=0;i<total;i++){
+        parts.push({x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-.5)*SP, vy:(Math.random()-.5)*SP});
+      }
+    }
+    function step(){
+      ctx.clearRect(0,0,W,H);
+      for(var i=0;i<parts.length;i++){
+        var p = parts[i];
+        p.x += p.vx; p.y += p.vy;
+        if(p.x<0||p.x>W) p.vx*=-1;
+        if(p.y<0||p.y>H) p.vy*=-1;
+      }
+      for(var a=0;a<parts.length;a++){
+        for(var b=a+1;b<parts.length;b++){
+          var dx=parts[a].x-parts[b].x, dy=parts[a].y-parts[b].y;
+          var d=dx*dx+dy*dy;
+          if(d < R*R){
+            var alpha = (1 - d/(R*R)) * 0.5;
+            ctx.strokeStyle = COL(alpha);
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(parts[a].x, parts[a].y);
+            ctx.lineTo(parts[b].x, parts[b].y);
+            ctx.stroke();
+          }
+        }
+        ctx.beginPath();
+        ctx.fillStyle = COL(0.7);
+        ctx.arc(parts[a].x, parts[a].y, 1.6, 0, Math.PI*2);
+        ctx.fill();
+      }
+      req = requestAnimationFrame(step);
+    }
+    var req = null, visible = false;
+    function start(){ if(!visible && !reduce){ visible = true; step(); } }
+    function stop(){ if(visible){ visible = false; if(req) cancelAnimationFrame(req); } }
+    if(reduce){
+      // static network for reduced motion
+      resize();
+      for(var i=0;i<parts.length;i++){ ctx.beginPath(); ctx.fillStyle="rgba(56,240,255,0.5)"; ctx.arc(parts[i].x,parts[i].y,1.4,0,Math.PI*2); ctx.fill(); }
+      for(var a=0;a<parts.length;a++){ for(var b=a+1;b<parts.length;b++){ var dx=parts[a].x-parts[b].x, dy=parts[a].y-parts[b].y; if(dx*dx+dy*dy<R*R){ ctx.strokeStyle=COL(0.25); ctx.beginPath(); ctx.moveTo(parts[a].x,parts[a].y); ctx.lineTo(parts[b].x,parts[b].y); ctx.stroke(); } } }
+      return;
+    }
+    var ro = ("IntersectionObserver" in window) ? new IntersectionObserver(function(en){ en.forEach(function(e){ e.isIntersecting ? start() : stop(); }); }, {threshold:0}) : null;
+    resize(); start();
+    window.addEventListener("resize", function(){ resize(); });
+    if(ro) ro.observe(canvas);
+  }
+  wireChain("chain-canvas", {count:120, radius:120, speed:0.35, density:9000, color:function(a){ return "rgba(56,240,255,"+(a*0.6)+")"; }});
+  wireChain("chain-canvas2", {count:90, radius:110, speed:0.3, density:8000, color:function(a){ return "rgba(255,224,102,"+(a*0.6)+")"; }});
+
+  /* ---- Film player: activate when the short file is present ---- */
+  var video = document.getElementById("film-video");
+  var ph = document.getElementById("film-placeholder");
+  var dur = document.getElementById("film-dur");
+  if(video){
+    video.addEventListener("loadedmetadata", function(){
+      if(ph){ ph.style.display = "none"; }
+      if(dur && isFinite(video.duration) && video.duration > 0){
+        var m = Math.floor(video.duration/60), s = Math.floor(video.duration%60);
+        dur.textContent = "TRAILER · " + m + ":" + (s<10?"0":"") + s;
+      }
+    });
+    video.addEventListener("error", function(){ /* placeholder stays until file is added */ });
+    var playBtn = document.querySelector(".player .playbtn");
+    if(playBtn){ playBtn.addEventListener("click", function(){ if(video.querySelector("source").src !== location.href) video.play(); }); }
+  }
+})();
+</script>
+</body>
+</html>
